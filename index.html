@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ishpreet @ Auribises 2026</title>
+<link rel="stylesheet" href="vendor/reveal/reveal.css">
+<link rel="stylesheet" href="vendor/reveal/theme-black.css">
+<style>
+@font-face{font-family:'Bebas';src:url('vendor/fonts/BebasNeue-Regular.woff2') format('woff2');}
+@font-face{font-family:'Jakarta';src:url('vendor/fonts/PlusJakarta-400.ttf') format('truetype');font-weight:400;}
+@font-face{font-family:'Jakarta';src:url('vendor/fonts/PlusJakarta-700.ttf') format('truetype');font-weight:700;}
+@font-face{font-family:'Mono';src:url('vendor/fonts/JetBrainsMono-400.ttf') format('truetype');font-weight:400;}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+.reveal-viewport{background:#0a0a0a!important;}
+.reveal .slides{font-family:'Jakarta','Segoe UI',sans-serif;}
+.reveal h1,.reveal h2,.reveal h3{text-transform:none;font-family:'Bebas','Impact',sans-serif;margin:0;}
+.reveal .progress span{background:#FFD60A;}
+.reveal .controls{color:#FFD60A;}
+.reveal .slide-number{font-family:'Mono';color:#666;font-size:.68rem;}
+
+/* ── CONSISTENT SLIDE TEMPLATE ─────────────── */
+/* Every slide: sw > sh (header 46px) + sb (body flex:1) */
+.sw{height:100%;display:flex;flex-direction:column;background:transparent;}
+.sh{height:46px;padding:0 44px;display:flex;align-items:center;gap:14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.08);}
+.sh-n{font-family:'Mono';font-size:.65rem;color:#555;min-width:24px;}
+.sh-t{font-family:'Bebas';font-size:1.2rem;letter-spacing:.5px;color:#f0f0f0;}
+.sh-cat{margin-left:auto;font-family:'Mono';font-size:.62rem;color:#666;text-transform:uppercase;letter-spacing:.1em;}
+.sb{flex:1;padding:20px 44px 18px;display:flex;min-height:0;overflow:hidden;}
+.sb.split{flex-direction:row;gap:36px;align-items:center;}
+.sb.center{flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.sb.col{flex-direction:column;gap:12px;}
+
+/* ── TYPE ──────────────────────────────────── */
+.bb{font-family:'Bebas','Impact',sans-serif;line-height:.9;letter-spacing:1px;}
+.mn{font-family:'Mono','Consolas',monospace;}
+.d1{font-size:clamp(5rem,9vw,8.5rem);}
+.d2{font-size:clamp(3.2rem,6vw,5.5rem);}
+.d3{font-size:clamp(2rem,4vw,3.4rem);}
+.d4{font-size:clamp(1.3rem,2.8vw,2rem);}
+/* Projector-safe label: was #999, now #ccc */
+.lbl{font-family:'Mono';font-size:.72rem;text-transform:uppercase;letter-spacing:.13em;color:#ccc;}
+/* Body text readable on projector */
+.body{font-size:1rem;line-height:1.6;color:#e0e0e0;}
+.w{color:#f0f0f0;}.y{color:#FFD60A;}.r{color:#FF3B30;}.b{color:#0A84FF;}
+.o{color:#FF6B2B;}.v{color:#BF5AF2;}.g{color:#32D74B;}.p{color:#FF375F;}.t{color:#32ADE6;}
+
+/* ── PROJECTOR-SAFE CARDS ──────────────────── */
+/* Solid colored backgrounds · visible on dim projectors */
+.card{border-radius:10px;padding:16px 18px;}
+.card-y{background:#FFD60A;color:#111;}
+.card-r{background:#FF3B30;color:#fff;}
+.card-b{background:#0A84FF;color:#fff;}
+.card-o{background:#FF6B2B;color:#fff;}
+.card-g{background:#32D74B;color:#111;}
+.card-v{background:#9333ea;color:#fff;}
+.card-p{background:#FF375F;color:#fff;}
+.card-t{background:#0891b2;color:#fff;}
+/* Dark card with visible border (projector-safe: 3px border) */
+.card-dk{background:#1a1a1a;border:2px solid rgba(255,255,255,0.18);border-radius:10px;padding:16px 18px;}
+
+/* ── STAT BOX ──────────────────────────────── */
+.stat{border-radius:10px;padding:18px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.stat-n{font-family:'Bebas';line-height:.9;}
+/* Projector-safe label inside stat: use dark color on bright bg */
+.stat-l{font-family:'Mono';font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;margin-top:6px;line-height:1.3;}
+
+/* ── FEATURE ROW (replaces bullets) ────────── */
+.feat{display:flex;flex-direction:column;gap:8px;width:100%;}
+.fr{display:flex;align-items:center;gap:12px;padding:10px 13px;border-radius:7px;background:#1f1f1f;border-left:4px solid;}
+.fr-icon{width:30px;height:30px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.95rem;}
+.fr-text{font-size:.92rem;color:#e8e8e8;font-family:'Jakarta';line-height:1.35;}
+.fr-text strong{color:#fff;}
+
+/* ── ARCH DIAGRAM HTML · SOLID ACCENT CARDS ── */
+/* Each layer is a fully-colored card; nodes are white pills inside */
+.arch{display:flex;flex-direction:column;gap:6px;width:100%;}
+.al{border-radius:8px;padding:11px 14px;display:flex;flex-direction:column;gap:8px;}
+.al-lbl{font-family:'Bebas';font-size:.92rem;text-transform:uppercase;letter-spacing:.12em;color:#fff;line-height:1;display:flex;align-items:center;gap:7px;}
+.al-lbl::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;flex-shrink:0;}
+.an-row{display:flex;gap:6px;flex-wrap:wrap;}
+.an{padding:5px 12px;border-radius:14px;font-family:'Jakarta','Segoe UI',sans-serif;font-size:.8rem;border:none;font-weight:700;background:#fff;line-height:1.3;}
+.aconn{text-align:center;font-family:'Mono';font-size:.78rem;color:#bbb;padding:3px 0;font-weight:700;letter-spacing:.05em;}
+
+/* ── BENTO TILES · asymmetric, full-screen ──── */
+.bento-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;grid-template-rows:1fr 1fr .55fr;gap:10px;flex:1;width:100%;min-height:0;}
+.tile{border-radius:11px;padding:16px 18px;display:flex;flex-direction:column;position:relative;overflow:hidden;min-height:0;}
+.t-hero{padding:22px 24px;grid-row:1/3;}
+.t-num{position:absolute;top:13px;right:15px;font-family:'Mono';font-size:.65rem;color:rgba(0,0,0,.5);text-transform:uppercase;letter-spacing:.12em;font-weight:700;}
+.tile-dark .t-num{color:rgba(255,255,255,.6);}
+.t-icon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:10px;}
+.t-hero .t-icon{width:54px;height:54px;margin-bottom:14px;}
+.t-name{font-family:'Bebas';font-size:1.75rem;line-height:.95;letter-spacing:.5px;color:#000;}
+.tile-dark .t-name{color:#fff;}
+.t-hero .t-name{font-size:3.2rem;line-height:.9;color:#fff;}
+.t-sub{font-size:.78rem;color:rgba(0,0,0,.78);margin-top:6px;font-family:'Jakarta';font-weight:700;line-height:1.3;}
+.tile-dark .t-sub{color:rgba(255,255,255,.88);}
+.t-stat{margin-top:auto;padding-top:8px;border-top:1.5px solid rgba(0,0,0,.18);font-family:'Mono';font-size:.66rem;font-weight:700;letter-spacing:.03em;color:rgba(0,0,0,.72);text-transform:uppercase;line-height:1.3;}
+.tile-dark .t-stat{border-top-color:rgba(255,255,255,.22);color:rgba(255,255,255,.88);}
+.t-hero-stat{font-family:'Bebas';font-size:5.2rem;line-height:.85;color:#fff;margin:6px 0 4px;}
+.t-hero-stat-l{font-family:'Mono';font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.88);font-weight:700;}
+
+/* Timeline strip (bottom row, spans full width) */
+.timeline-strip{grid-column:1/5;display:flex;align-items:center;gap:14px;padding:14px 22px;background:#141414;border:2px solid rgba(255,255,255,.12);border-radius:11px;}
+.tl-rail{flex:1;display:flex;align-items:center;justify-content:space-between;position:relative;}
+.tl-rail::before{content:'';position:absolute;top:50%;left:2%;right:2%;height:2px;background:linear-gradient(90deg,#FFD60A 0%,#32D74B 100%);transform:translateY(-50%);border-radius:1px;}
+.tl-mk{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;}
+.tl-dot{width:18px;height:18px;border-radius:50%;background:#0a0a0a;border:2.5px solid #FFD60A;display:flex;align-items:center;justify-content:center;font-family:'Bebas';font-size:.7rem;color:#FFD60A;font-weight:700;}
+.tl-mk.done .tl-dot{background:#FFD60A;color:#0a0a0a;border-color:#FFD60A;}
+.tl-mk.done .tl-mlabel{color:#FFD60A;}
+.tl-mlabel{font-family:'Mono';font-size:.58rem;color:#666;text-transform:uppercase;letter-spacing:.08em;margin-top:5px;font-weight:700;}
+.tl-divider{width:1px;height:36px;background:rgba(255,255,255,.15);}
+.tl-stat{display:flex;flex-direction:column;align-items:flex-start;min-width:120px;}
+.tl-stat-n{font-family:'Bebas';font-size:1.8rem;line-height:.9;color:#FFD60A;letter-spacing:1px;}
+.tl-stat-l{font-family:'Mono';font-size:.6rem;color:#888;text-transform:uppercase;letter-spacing:.1em;margin-top:3px;font-weight:700;}
+
+/* ── FLOW · solid accent chips for projector ── */
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;align-items:center;}
+.fn{padding:7px 14px;border-radius:14px;font-family:'Jakarta','Segoe UI',sans-serif;font-size:.82rem;border:none;white-space:nowrap;font-weight:700;line-height:1.2;}
+.fa{color:#FFD60A;font-size:1.1rem;font-weight:900;}
+
+/* ── DRAKE MEME ────────────────────────────── */
+.drake-wrap{display:flex;flex-direction:column;border-radius:10px;overflow:hidden;width:100%;}
+.dp{display:flex;align-items:center;min-height:90px;}
+.dp-face{width:105px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:8px;}
+.dp-text{flex:1;padding:12px 16px;font-family:'Jakarta';font-size:.93rem;font-weight:700;line-height:1.3;}
+.dp.no{background:#2a1414;}.dp.no .dp-text{color:#ff8080;}
+.dp.yes{background:#142a14;}.dp.yes .dp-text{color:#80ff90;}
+.dp.woj{background:#14141c;}.dp.woj .dp-text{color:#a0a0cc;}
+
+/* ── BRAIN MEME ────────────────────────────── */
+.bm{display:flex;flex-direction:column;gap:6px;width:100%;}
+.br{display:flex;align-items:center;gap:16px;padding:11px 14px;border-radius:8px;border:2px solid rgba(255,255,255,0.08);}
+.br-face{width:54px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.br-text{font-family:'Jakarta';font-size:.9rem;color:#e0e0e0;line-height:1.3;flex:1;}
+
+/* ── TERMINAL ──────────────────────────────── */
+.term{background:#141414;border:2px solid #2a2a2a;border-radius:9px;padding:18px 22px;font-family:'Mono';font-size:.79rem;line-height:1.85;width:100%;}
+.tc{color:#888;}.tk{color:#4da6ff;}.tv{color:#4dff88;}.td{color:#777;}
+
+/* ── ANIMATIONS ────────────────────────────── */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes wave{from{transform:rotate(-18deg)}to{transform:rotate(14deg)}}
+@keyframes fireFlicker{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.08)}}
+@keyframes confetti-fall{0%{transform:translateY(-10px) rotate(0deg);opacity:1;}100%{transform:translateY(750px) rotate(600deg);opacity:0;}}
+.float-anim{animation:float 4s ease-in-out infinite;}
+.wave-arm{transform-origin:146px 153px;animation:wave .65s ease-in-out infinite alternate;}
+.confetti-piece{position:absolute;pointer-events:none;z-index:20;animation:confetti-fall linear;}
+.gsap-up{opacity:0;transform:translateY(24px);}
+.gsap-right{opacity:0;transform:translateX(-24px);}
+.gsap-scale{opacity:0;transform:scale(.82);}
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- ═══ S01 TITLE ════════════════════════════════════ -->
+<section data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh" style="border-color:rgba(255,214,10,.2);">
+    <span class="sh-n" style="color:#FFD60A;">00</span>
+    <span class="sh-t" style="color:#FFD60A;">INTERNSHIP REPORT 2026</span>
+    <span class="sh-cat">Auribises Technologies</span>
+  </div>
+  <div class="sb split" style="gap:0;padding:16px 44px;">
+    <!-- LEFT: text -->
+    <div style="flex:1.1;display:flex;flex-direction:column;justify-content:center;gap:8px;">
+      <div class="lbl gsap-right" style="color:#FFD60A;">GNDPC Ludhiana · Computer Science &amp; Engineering</div>
+      <div class="bb d1 w gsap-right" style="line-height:.88;">INTERNSHIP</div>
+      <div class="bb d1 y gsap-right" style="line-height:.88;margin-top:-4px;">REPORT</div>
+      <div style="height:3px;width:100%;background:linear-gradient(90deg,#FFD60A,transparent);margin:12px 0 10px;"></div>
+      <div class="bb d4 w gsap-right" style="letter-spacing:2px;opacity:.85;">AT AURIBISES TECHNOLOGIES</div>
+      <div class="mn gsap-right" style="font-size:.8rem;color:#666;margin-top:4px;">JANUARY 2026 — JUNE 2026</div>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:5px;">
+        <div class="lbl gsap-up" style="color:#ccc;">Ishpreet Singh · CSE · Roll 1030 · Reg 230179501386</div>
+        <div class="lbl gsap-up" style="color:#777;">Mentor: Aman Bhardawaj · Supervisor: Ishant Kumar (Auribises)</div>
+      </div>
+    </div>
+    <!-- RIGHT: Sikh developer SVG -->
+    <div style="flex:.9;display:flex;align-items:center;justify-content:center;">
+      <div class="gsap-scale float-anim">
+        <svg viewBox="0 0 240 370" width="275" xmlns="http://www.w3.org/2000/svg">
+          <!-- Laptop -->
+          <rect x="10" y="268" width="220" height="88" rx="10" fill="#1c2030"/>
+          <rect x="18" y="276" width="204" height="70" rx="5" fill="#0d1117"/>
+          <rect x="28" y="286" width="60" height="4" rx="2" fill="#22d3ee"/>
+          <rect x="38" y="296" width="46" height="4" rx="2" fill="#86efac"/>
+          <rect x="38" y="306" width="76" height="4" rx="2" fill="#fca5a5"/>
+          <rect x="28" y="316" width="35" height="4" rx="2" fill="#22d3ee"/>
+          <rect x="28" y="326" width="52" height="4" rx="2" fill="#f9a8d4"/>
+          <rect x="88" y="286" width="3" height="11" rx="1" fill="#22d3ee"><animate attributeName="opacity" values="1;0;1" dur="1.1s" repeatCount="indefinite"/></rect>
+          <rect x="10" y="354" width="220" height="7" rx="3" fill="#2a3040"/>
+          <!-- Body -->
+          <rect x="65" y="196" width="110" height="76" rx="16" fill="#2563eb"/>
+          <rect x="80" y="208" width="22" height="14" rx="3" fill="#1d4ed8"/>
+          <!-- Neck -->
+          <rect x="107" y="186" width="26" height="15" rx="7" fill="#E8C8A0"/>
+          <!-- Face base behind source character -->
+          <circle cx="120" cy="160" r="44" fill="#E8C8A0"/>
+          <!-- === SOURCE: face + turban, scaled ×3.5, recoloured === -->
+          <g transform="translate(36,58) scale(3.5)">
+            <!-- Turban main body (st11) -->
+            <path d="M24,5C15.9,5,9.4,11.5,9.4,19.6v7.6h29.2v-7.6C38.6,11.5,32.1,5,24,5z" fill="#666666" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Face contour (st11, recoloured from grey to skin) -->
+            <path d="M40.2,26.1c-0.1-1.1-1-2-2.1-2.3l-0.9-0.2C35.9,23.2,35,22,35,20.7v-3.1c0-1.3-0.9-2.4-2.1-2.7c-2.3,1-5.4,1.6-8.9,1.6s-6.6-0.6-8.9-1.6c-1.2,0.3-2.1,1.4-2.1,2.7v3.1c0,1.4-0.9,2.6-2.2,2.9l-0.9,0.2c-1.1,0.3-2,1.2-2.1,2.3c-0.1,1.6,1.1,2.9,2.7,2.9c0.1,0,0.1,0,0.2,0c1,6.5,6.5,11.5,13.3,11.5s12.3-5,13.3-11.5c0.1,0,0.1,0,0.2,0C39,29.1,40.3,27.7,40.2,26.1z" fill="#E8C8A0" stroke="none"/>
+            <!-- Eyes (st12) -->
+            <circle cx="17.1" cy="25.8" r="1.1" fill="#444444"/>
+            <circle cx="30.9" cy="25.8" r="1.1" fill="#444444"/>
+            <!-- Smile (st3) -->
+            <path d="M21.2,36.1c0,0,0.7,0.9,2.8,0.9c2.1,0,2.8-0.9,2.8-0.9" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Back hair / top lightening (st82) -->
+            <path d="M39.4,16.7c0-0.8,0-1.8,0-2.8c0-6.9-6.6-12.2-15.4-12.2S8.6,6.9,8.6,13.8C8.6,22.7,9.4,24,9.4,24s6.9-3.4,15-5.4c8.3,1.9,14.2,5.3,14.2,5.3S39.2,23,39.4,16.7z" fill="#777777"/>
+            <!-- White highlight (st41) -->
+            <path d="M24,5.7c8.4,0,14.8,4.8,15.4,11.2c0-0.1,0-0.2,0-0.3c0-0.8,0-1.8,0-2.8c0-6.9-6.6-12.2-15.4-12.2S8.6,6.9,8.6,13.8c0,1.2,0,2.2,0,3.2C9.2,10.5,15.6,5.7,24,5.7z" fill="#FFFFFF"/>
+            <!-- Turban outline & hair detail lines (st3) -->
+            <path d="M39.4,16.7c0-0.8,0-1.8,0-2.8c0-6.9-6.6-12.2-15.4-12.2S8.6,6.9,8.6,13.8C8.6,22.7,9.4,24,9.4,24s6.9-3.4,15-5.4c8.3,1.9,14.2,5.3,14.2,5.3S39.2,23,39.4,16.7z" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8.6,13.8c0,0,5.8-10.5,22.3-11" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M35.4,11.9c0,0-11.7-0.2-22.1,6.6" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24.4,18.6c10.5-2.5,15-2,15-2" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <!-- Custom features: eyebrows, nose, moustache, beard -->
+          <path d="M 88 142 Q 96 138 104 142" stroke="#3a2418" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <path d="M 136 142 Q 144 138 152 142" stroke="#3a2418" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <ellipse cx="120" cy="148" rx="3.5" ry="2.5" fill="#D4B08A"/>
+          <path d="M 117 150 Q 120 152 123 150" stroke="#B8946A" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+          <path d="M 100 164 Q 115 160 120 162 Q 125 160 140 164" stroke="#5a3a1a" stroke-width="2.5" fill="#5a3a1a" stroke-linecap="round"/>
+          <path d="M 85 176 Q 95 168 108 172 Q 120 176 132 172 Q 145 168 155 176 Q 152 192 144 200 Q 130 206 120 206 Q 110 206 96 200 Q 88 192 85 176 Z" fill="#5a3a1a"/>
+          <path d="M 95 187 Q 100 192 103 196" stroke="#3a2418" stroke-width="0.8" fill="none" stroke-linecap="round" opacity=".4"/>
+          <path d="M 145 187 Q 140 192 137 196" stroke="#3a2418" stroke-width="0.8" fill="none" stroke-linecap="round" opacity=".4"/>
+          <!-- Arms (skin coloured) -->
+          <path d="M 65 213 Q 37 234 34 268" stroke="#E8C8A0" stroke-width="19" stroke-linecap="round" fill="none"/>
+          <path d="M 175 213 Q 203 234 206 268" stroke="#E8C8A0" stroke-width="19" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S02 WHO AM I ══════════════════════════════════ -->
+<section data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh">
+    <span class="sh-n">01</span>
+    <span class="sh-t">WHO AM I</span>
+    <span class="sh-cat">About</span>
+  </div>
+  <div class="sb split">
+    <!-- LEFT -->
+    <div style="flex:1.1;display:flex;flex-direction:column;gap:14px;">
+      <div>
+        <div class="bb d3 w">THE DEVELOPER<br><span class="y">BEHIND THE WORK</span></div>
+        <div style="height:3px;width:56px;background:#FFD60A;border-radius:2px;margin:12px 0;"></div>
+      </div>
+      <p class="body" style="font-size:.97rem;">2+ years of self-taught full-stack before this internship. React, Firebase, Python, Flutter. I already knew the tools. At Auribises, I learned what they mean at <strong>production scale</strong> with real clients, real regulations, and real consequences.</p>
+      <!-- Feature rows instead of bullets -->
+      <div class="feat">
+        <div class="fr" style="border-color:#FFD60A;">
+          <div class="fr-icon" style="background:#FFD60A55;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#FFD60A" stroke="none"><path d="M13 2 L4 13 H11 L10 22 L20 11 H13 Z"/></svg></div>
+          <div class="fr-text"><strong>Before:</strong> JASRCOF SaaS (11k+ users) · Rodo commerce (200+ DAU) · Production APIs</div>
+        </div>
+        <div class="fr" style="border-color:#32D74B;">
+          <div class="fr-icon" style="background:#32D74B55;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#32D74B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L8 8 H4 L8 14 L5 21 L12 16 L19 21 L16 14 L20 8 H16 L12 2 Z"/></svg></div>
+          <div class="fr-text"><strong>After:</strong> Production systems serving users in India and Germany</div>
+        </div>
+        <div class="fr" style="border-color:#0A84FF;">
+          <div class="fr-icon" style="background:#0A84FF55;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(0 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="1.5" fill="#0A84FF"/></svg></div>
+          <div class="fr-text"><strong>Domain:</strong> Full-stack · AI/ML · IoT · Mobile · DevOps · Enterprise</div>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT: stats + giga chad -->
+    <div style="flex:.85;display:flex;flex-direction:column;gap:9px;">
+      <!-- Shrek -->
+      <div style="text-align:center;margin-bottom:4px;">
+        <svg viewBox="0 0 100 120" width="78" xmlns="http://www.w3.org/2000/svg">
+          <!-- Body (brown vest) -->
+          <path d="M 22 80 Q 22 70 30 65 L 70 65 Q 78 70 78 80 L 80 116 Q 50 124 20 116Z" fill="#6B4423"/>
+          <!-- Shirt underneath (white) -->
+          <path d="M 30 70 L 50 84 L 70 70 L 70 65 L 30 65Z" fill="#F5EBD8"/>
+          <!-- Belt -->
+          <rect x="22" y="100" width="58" height="6" fill="#3D2410"/>
+          <rect x="46" y="98" width="10" height="10" fill="#D4AF37"/>
+          <!-- Head (green ogre) -->
+          <ellipse cx="50" cy="40" rx="30" ry="32" fill="#5C8A3A"/>
+          <!-- Ears (rounded ogre ears) -->
+          <ellipse cx="20" cy="42" rx="7" ry="10" fill="#5C8A3A"/>
+          <ellipse cx="20" cy="42" rx="3.5" ry="6" fill="#3D5C24"/>
+          <ellipse cx="80" cy="42" rx="7" ry="10" fill="#5C8A3A"/>
+          <ellipse cx="80" cy="42" rx="3.5" ry="6" fill="#3D5C24"/>
+          <!-- Brow ridge -->
+          <path d="M 28 28 Q 50 22 72 28" stroke="#3D5C24" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Eyes -->
+          <ellipse cx="40" cy="36" rx="3.5" ry="2.5" fill="white"/>
+          <ellipse cx="60" cy="36" rx="3.5" ry="2.5" fill="white"/>
+          <circle cx="40" cy="36" r="1.5" fill="#1c1917"/>
+          <circle cx="60" cy="36" r="1.5" fill="#1c1917"/>
+          <!-- Nose (big ogre nose) -->
+          <ellipse cx="50" cy="46" rx="4" ry="3" fill="#4A7230"/>
+          <!-- Smile (slight grin) -->
+          <path d="M 40 54 Q 50 58 60 54" stroke="#2D3A1A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Tunic collar accent -->
+          <path d="M 38 65 L 50 75 L 62 65" stroke="#3D2410" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div class="mn" style="font-size:.58rem;color:#666;margin-top:2px;">the energy i'm bringing</div>
+      </div>
+      <!-- Stats - solid colored for projector visibility -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div class="stat card-y"><div class="stat-n" style="font-size:3.2rem;color:#111;" data-count="7">7</div><div class="stat-l" style="color:#333;">Live Systems<br>in Production</div></div>
+        <div class="stat card-b"><div class="stat-n" style="font-size:3.2rem;color:#fff;">15+</div><div class="stat-l" style="color:#ddd;">Tech Stacks<br>Mastered</div></div>
+        <div class="stat card-g"><div class="stat-n" style="font-size:3.2rem;color:#111;" data-count="6">6</div><div class="stat-l" style="color:#333;">Months<br>@ Auribises</div></div>
+        <div class="stat card-p"><div class="stat-n" style="font-size:3.2rem;color:#fff;">2+</div><div class="stat-l" style="color:#eee;">Countries<br>IN + DE + US</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S03 AURIBISES ═════════════════════════════════ -->
+<section data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh">
+    <span class="sh-n">02</span>
+    <span class="sh-t" style="color:#FF6B2B;">AURIBISES TECHNOLOGIES</span>
+    <span class="sh-cat">The Company</span>
+  </div>
+  <div class="sb center" style="gap:12px;">
+    <div class="bb d2 w" style="font-size:clamp(3rem,7vw,6.5rem);letter-spacing:3px;">AURIBISES</div>
+    <div class="mn" style="font-size:.8rem;color:#666;margin-top:-6px;letter-spacing:.2em;">TECHNOLOGIES PVT. LTD. · LUDHIANA, PUNJAB</div>
+
+    <!-- India → Germany SVG with characters -->
+    <div style="display:flex;align-items:center;gap:16px;margin:6px 0;">
+      <!-- Indian dev (Sikh mini character) -->
+      <svg viewBox="0 0 80 90" width="58" xmlns="http://www.w3.org/2000/svg">
+        <!-- Body (blue kurta) -->
+        <rect x="20" y="42" width="40" height="38" rx="10" fill="#2563eb"/>
+        <rect x="32" y="54" width="8" height="5" rx="2" fill="#1d4ed8"/>
+        <rect x="40" y="54" width="8" height="5" rx="2" fill="#1d4ed8"/>
+        <!-- Source turban + face (canonical paths) -->
+        <g transform="translate(16, 4) scale(1.0)">
+          <path d="M24,5C15.9,5,9.4,11.5,9.4,19.6v7.6h29.2v-7.6C38.6,11.5,32.1,5,24,5z" fill="#666666" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M40.2,26.1c-0.1-1.1-1-2-2.1-2.3l-0.9-0.2C35.9,23.2,35,22,35,20.7v-3.1c0-1.3-0.9-2.4-2.1-2.7c-2.3,1-5.4,1.6-8.9,1.6s-6.6-0.6-8.9-1.6c-1.2,0.3-2.1,1.4-2.1,2.7v3.1c0,1.4-0.9,2.6-2.2,2.9l-0.9,0.2c-1.1,0.3-2,1.2-2.1,2.3c-0.1,1.6,1.1,2.9,2.7,2.9c0.1,0,0.1,0,0.2,0c1,6.5,6.5,11.5,13.3,11.5s12.3-5,13.3-11.5c0.1,0,0.1,0,0.2,0C39,29.1,40.3,27.7,40.2,26.1z" fill="#E8C8A0" stroke="none"/>
+          <circle cx="17.1" cy="25.8" r="1.1" fill="#444444"/>
+          <circle cx="30.9" cy="25.8" r="1.1" fill="#444444"/>
+          <path d="M21.2,36.1c0,0,0.7,0.9,2.8,0.9c2.1,0,2.8-0.9,2.8-0.9" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M39.4,16.7c0-0.8,0-1.8,0-2.8c0-6.9-6.6-12.2-15.4-12.2S8.6,6.9,8.6,13.8C8.6,22.7,9.4,24,9.4,24s6.9-3.4,15-5.4c8.3,1.9,14.2,5.3,14.2,5.3S39.2,23,39.4,16.7z" fill="#777777"/>
+          <path d="M24,5.7c8.4,0,14.8,4.8,15.4,11.2c0-0.1,0-0.2,0-0.3c0-0.8,0-1.8,0-2.8c0-6.9-6.6-12.2-15.4-12.2S8.6,6.9,8.6,13.8c0,1.2,0,2.2,0,3.2C9.2,10.5,15.6,5.7,24,5.7z" fill="#FFFFFF"/>
+          <path d="M39.4,16.7c0-0.8,0-1.8,0-2.8c0-6.9-6.6-12.2-15.4-12.2S8.6,6.9,8.6,13.8C8.6,22.7,9.4,24,9.4,24s6.9-3.4,15-5.4c8.3,1.9,14.2,5.3,14.2,5.3S39.2,23,39.4,16.7z" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8.6,13.8c0,0,5.8-10.5,22.3-11" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M35.4,11.9c0,0-11.7-0.2-22.1,6.6" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24.4,18.6c10.5-2.5,15-2,15-2" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <!-- Beard -->
+        <path d="M 26 42 Q 22 52 28 56 Q 34 58 40 56 Q 46 52 42 42" fill="#5a3a1a"/>
+        <path d="M 28 48 Q 34 50 40 48" stroke="#3a2418" stroke-width="0.8" fill="none" stroke-linecap="round" opacity=".4"/>
+        <!-- Arm reaching right -->
+        <path d="M 58 50 Q 68 54 74 50" stroke="#E8C8A0" stroke-width="6" stroke-linecap="round" fill="none"/>
+      </svg>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <svg viewBox="0 0 220 20" width="200">
+          <line x1="0" y1="10" x2="220" y2="10" stroke="#222" stroke-width="2" stroke-dasharray="6,4"/>
+          <path d="M 80 10 Q 110 2 140 10" stroke="#FFD60A" stroke-width="2.5" fill="none"/>
+          <polygon points="208,5 220,10 208,15" fill="#32D74B"/>
+        </svg>
+        <div class="mn" style="font-size:.6rem;color:#555;">Ludhiana → Frankfurt</div>
+      </div>
+
+      <!-- German dev character -->
+      <svg viewBox="0 0 80 90" width="58" xmlns="http://www.w3.org/2000/svg">
+        <!-- Body (blue shirt) -->
+        <rect x="20" y="42" width="40" height="38" rx="10" fill="#1d4ed8"/>
+        <rect x="32" y="54" width="8" height="5" rx="2" fill="#0f3a8a"/>
+        <rect x="40" y="54" width="8" height="5" rx="2" fill="#0f3a8a"/>
+        <!-- Face -->
+        <circle cx="40" cy="26" r="14" fill="#E8C8A0"/>
+        <!-- Neck -->
+        <rect x="36" y="38" width="8" height="6" rx="3" fill="#E8C8A0"/>
+        <!-- Hair (short/bowl cut) -->
+        <path d="M 26 26 Q 26 10 40 8 Q 54 10 54 26 Q 50 16 40 14 Q 30 16 26 26Z" fill="#5a3a1a"/>
+        <path d="M 28 24 Q 30 18 40 16 Q 50 18 52 24" fill="#5a3a1a"/>
+        <!-- Glasses -->
+        <rect x="28" y="21" width="9" height="8" rx="2" fill="none" stroke="#1c1917" stroke-width="1.3"/>
+        <rect x="43" y="21" width="9" height="8" rx="2" fill="none" stroke="#1c1917" stroke-width="1.3"/>
+        <line x1="37" y1="25" x2="43" y2="25" stroke="#1c1917" stroke-width="1"/>
+        <!-- Eyes -->
+        <circle cx="32.5" cy="25" r="1.5" fill="#1c1917"/>
+        <circle cx="47.5" cy="25" r="1.5" fill="#1c1917"/>
+        <!-- Smile -->
+        <path d="M 35 33 Q 40 36 45 33" stroke="#8B5A2B" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Arm reaching left -->
+        <path d="M 22 50 Q 12 54 6 50" stroke="#E8C8A0" stroke-width="6" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;width:100%;max-width:780px;">
+      <div style="background:#FF6B2B;border-radius:10px;padding:18px 14px;text-align:center;">
+        <div class="bb" style="font-size:1.9rem;color:#fff;">PRODUCTS</div>
+        <p style="font-size:.8rem;color:rgba(255,255,255,.88);margin-top:5px;font-family:'Jakarta';">Healthcare · E-Commerce · Travel · Textiles · Security</p>
+      </div>
+      <div style="background:#0A84FF;border-radius:10px;padding:18px 14px;text-align:center;">
+        <div class="bb" style="font-size:1.9rem;color:#fff;">COMPLIANCE</div>
+        <p style="font-size:.8rem;color:rgba(255,255,255,.88);margin-top:5px;font-family:'Jakarta';">GDPR · DSGVO · KBV-certified video infrastructure</p>
+      </div>
+      <div style="background:#32D74B;border-radius:10px;padding:18px 14px;text-align:center;">
+        <div class="bb" style="font-size:1.9rem;color:#111;">PRODUCTION</div>
+        <p style="font-size:.8rem;color:rgba(0,0,0,.75);margin-top:5px;font-family:'Jakarta';">Real clients · Real traffic · Real consequences</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S04 PROJECTS BENTO ════════════════════════════ -->
+<section data-auto-animate data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh">
+    <span class="sh-n">03</span>
+    <span class="sh-t">7 PROJECTS · 6 MONTHS</span>
+    <span class="sh-cat">Portfolio</span>
+  </div>
+  <div class="sb col" style="gap:10px;">
+    <div class="mn" style="font-size:.78rem;color:#888;">all shipped. none fake. i promise.</div>
+    <div class="bento-grid">
+      <!-- HERO: AEGIS AI (2 rows tall, 1.5fr wide) -->
+      <div class="tile t-hero" data-id="t01" style="background:#FF3B30;justify-content:space-between;">
+        <div>
+          <div class="t-icon">
+            <svg viewBox="0 0 54 54" width="54" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="27" cy="27" r="22" fill="none" stroke="#fff" stroke-width="2.5"/>
+              <circle cx="27" cy="27" r="14" fill="none" stroke="#fff" stroke-width="1.5" opacity=".5"/>
+              <circle cx="27" cy="27" r="8" fill="#fff"/>
+              <circle cx="29" cy="25" r="2.5" fill="#FF3B30"/>
+              <line x1="6" y1="27" x2="48" y2="27" stroke="#fff" stroke-width="1.5" opacity=".6">
+                <animate attributeName="y1" values="14;40;14" dur="2.4s" repeatCount="indefinite"/>
+                <animate attributeName="y2" values="14;40;14" dur="2.4s" repeatCount="indefinite"/>
+              </line>
+            </svg>
+          </div>
+          <div class="t-name">AEGIS AI</div>
+          <div class="t-sub" style="color:rgba(255,255,255,.9);max-width:240px;">IoT · Face Recognition Access Control · 3 threads · dlib 128D</div>
+        </div>
+        <div>
+          <div class="t-hero-stat"><span data-count="96">96</span>%</div>
+          <div class="t-hero-stat-l">face recognition accuracy · 33% stricter than dlib default</div>
+        </div>
+        <div class="t-num" style="color:rgba(255,255,255,.6);">01</div>
+      </div>
+      <!-- COUPASO -->
+      <div class="tile" data-id="t02" style="background:#0A84FF;justify-content:space-between;">
+        <div>
+          <div class="t-icon">
+            <svg viewBox="0 0 38 38" width="38" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 5 8 L 11 8 L 17 27 L 31 27 L 34 12 L 13 12" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="17" cy="32" r="2.5" fill="#fff"/>
+              <circle cx="28" cy="32" r="2.5" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="t-name">COUPASO</div>
+          <div class="t-sub" style="color:rgba(255,255,255,.9);">German Cashback · GDPR · Next.js 14</div>
+        </div>
+        <div class="t-stat" style="color:rgba(255,255,255,.92);border-top-color:rgba(255,255,255,.25);">28 INDEXES · 40+ PAGES</div>
+        <div class="t-num" style="color:rgba(255,255,255,.6);">02</div>
+      </div>
+      <!-- GODWIT -->
+      <div class="tile" data-id="t03" style="background:#FF6B2B;justify-content:space-between;">
+        <div>
+          <div class="t-icon">
+            <svg viewBox="0 0 38 38" width="38" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 4 19 L 22 15 L 31 7 L 33 9 L 27 17 L 31 21 L 29 23 L 22 19 L 9 23 L 4 21 L 9 19 Z" fill="#fff"/>
+              <circle cx="9" cy="21" r="1.5" fill="#FF6B2B"/>
+            </svg>
+          </div>
+          <div class="t-name">GODWIT</div>
+          <div class="t-sub" style="color:rgba(255,255,255,.92);">Travel CRM · Angular 10</div>
+        </div>
+        <div class="t-stat" style="color:rgba(255,255,255,.92);border-top-color:rgba(255,255,255,.25);">130+ ROUTES · 21 CURRENCIES</div>
+        <div class="t-num" style="color:rgba(255,255,255,.6);">03</div>
+      </div>
+      <!-- GURBANI -->
+      <div class="tile tile-dark" data-id="t04" style="background:#9333ea;justify-content:space-between;">
+        <div>
+          <div class="t-icon">
+            <svg viewBox="0 0 38 38" width="38" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="6" width="28" height="26" rx="3" fill="none" stroke="#fff" stroke-width="2.5"/>
+              <line x1="19" y1="6" x2="19" y2="32" stroke="#fff" stroke-width="2"/>
+              <line x1="10" y1="13" x2="15" y2="13" stroke="#fff" stroke-width="1.5"/>
+              <line x1="10" y1="19" x2="15" y2="19" stroke="#fff" stroke-width="1.5"/>
+              <line x1="10" y1="25" x2="15" y2="25" stroke="#fff" stroke-width="1.5"/>
+              <line x1="23" y1="13" x2="28" y2="13" stroke="#fff" stroke-width="1.5"/>
+              <line x1="23" y1="19" x2="28" y2="19" stroke="#fff" stroke-width="1.5"/>
+              <line x1="23" y1="25" x2="28" y2="25" stroke="#fff" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="t-name">GURBANI</div>
+          <div class="t-sub">Flutter 3 · iOS + Android</div>
+        </div>
+        <div class="t-stat">4.9★ APP STORE · FCM</div>
+        <div class="t-num">04</div>
+      </div>
+      <!-- SAP MW -->
+      <div class="tile tile-dark" data-id="t05" style="background:#0891b2;justify-content:space-between;">
+        <div>
+          <div class="t-icon">
+            <svg viewBox="0 0 38 38" width="38" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 14 7 L 4 19 L 14 31" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 24 7 L 34 19 L 24 31" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="21" y1="11" x2="17" y2="27" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="t-name">SAP MW</div>
+          <div class="t-sub">Express.js · Docker Alpine</div>
+        </div>
+        <div class="t-stat">STATELESS · TS · UID 10014</div>
+        <div class="t-num">05</div>
+      </div>
+      <!-- VARDHMAN -->
+      <div class="tile" data-id="t06" style="background:#32D74B;justify-content:space-between;">
+        <div>
+          <div class="t-icon">
+            <svg viewBox="0 0 38 38" width="38" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="30" height="30" rx="2" fill="none" stroke="#0a0a0a" stroke-width="2.5"/>
+              <line x1="12" y1="4" x2="12" y2="34" stroke="#0a0a0a" stroke-width="2"/>
+              <line x1="19" y1="4" x2="19" y2="34" stroke="#0a0a0a" stroke-width="2"/>
+              <line x1="26" y1="4" x2="26" y2="34" stroke="#0a0a0a" stroke-width="2"/>
+              <line x1="4" y1="12" x2="34" y2="12" stroke="#FFD60A" stroke-width="2.5"/>
+              <line x1="4" y1="19" x2="34" y2="19" stroke="#FF3B30" stroke-width="2.5"/>
+              <line x1="4" y1="26" x2="34" y2="26" stroke="#0A84FF" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="t-name">VARDHMAN</div>
+          <div class="t-sub" style="color:rgba(0,0,0,.7);">FastAPI · HuggingFace · Pandas</div>
+        </div>
+        <div class="t-stat">2307-LINES · 18 ENDPOINTS</div>
+        <div class="t-num">06</div>
+      </div>
+      <!-- MENTCAPE -->
+      <div class="tile tile-dark" data-id="t07" style="background:#FF375F;justify-content:space-between;">
+        <div>
+          <div class="t-icon">
+            <svg viewBox="0 0 38 38" width="38" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 19 31 C 5 24 5 12 13 9 C 16 11 19 13 19 13 C 19 13 22 11 25 9 C 33 12 33 24 19 31 Z" fill="#fff"/>
+              <path d="M 12 18 C 14 16 16 16 17 18" stroke="#FF375F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 21 18 C 22 16 24 16 26 18" stroke="#FF375F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="t-name">MENTCAPE</div>
+          <div class="t-sub">tRPC · GKE · LiveKit SFU</div>
+        </div>
+        <div class="t-stat">KBV ✓ · DSGVO · GKE DE</div>
+        <div class="t-num">07</div>
+      </div>
+      <!-- BOTTOM: TIMELINE STRIP (spans all 4 columns) -->
+      <div class="timeline-strip">
+        <div class="tl-stat">
+          <div class="tl-stat-n" style="color:#32D74B;">JAN to JUN</div>
+          <div class="tl-stat-l">6 months · 1 internship</div>
+        </div>
+        <div class="tl-divider"></div>
+        <div class="tl-rail">
+          <div class="tl-mk done"><div class="tl-dot">1</div><div class="tl-mlabel">Aegis</div></div>
+          <div class="tl-mk done"><div class="tl-dot">2</div><div class="tl-mlabel">Coupaso</div></div>
+          <div class="tl-mk done"><div class="tl-dot">3</div><div class="tl-mlabel">Godwit</div></div>
+          <div class="tl-mk done"><div class="tl-dot">4</div><div class="tl-mlabel">Gurbani</div></div>
+          <div class="tl-mk done"><div class="tl-dot">5</div><div class="tl-mlabel">SAP MW</div></div>
+          <div class="tl-mk done"><div class="tl-dot">6</div><div class="tl-mlabel">Vardhman</div></div>
+          <div class="tl-mk done"><div class="tl-dot">7</div><div class="tl-mlabel">Mentcape</div></div>
+        </div>
+        <div class="tl-divider"></div>
+        <div class="tl-stat">
+          <div class="tl-stat-n">7 / 7</div>
+          <div class="tl-stat-l">SHIPPED · IN + DE</div>
+        </div>
+        <div class="tl-divider"></div>
+        <div class="tl-stat">
+          <div class="tl-stat-n" style="color:#0A84FF;">15+</div>
+          <div class="tl-stat-l">STACKS · 2 COUNTRIES</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S05 AEGIS AI ══════════════════════════════════ -->
+<section data-auto-animate data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh" style="border-color:rgba(255,59,48,.25);">
+    <span class="sh-n" style="color:#FF3B30;">01</span>
+    <span data-id="pt" class="sh-t" style="color:#FF3B30;">AGILE AEGIS AI</span>
+    <span class="sh-cat">Security · IoT · AI</span>
+  </div>
+  <div class="sb split" style="gap:28px;">
+    <!-- LEFT: arch + features -->
+    <div style="flex:1.1;display:flex;flex-direction:column;gap:10px;">
+      <div class="lbl" style="color:#FF3B30;">the one where i soldered wires at 2am</div>
+      <div class="arch">
+        <div class="al" style="background:#0A84FF;">
+          <div class="al-lbl">FIREBASE CLOUD</div>
+          <div class="an-row">
+            <div class="an" style="color:#0A84FF;">Firestore</div>
+            <div class="an" style="color:#0A84FF;">Storage</div>
+            <div class="an" style="color:#0A84FF;">Next.js Dashboard</div>
+          </div>
+        </div>
+        <div class="aconn">↑↓ Firebase SDK / Admin SDK</div>
+        <div class="al" style="background:#9333ea;">
+          <div class="al-lbl">PYTHON AI GATEWAY · 3 DAEMON THREADS</div>
+          <div class="an-row">
+            <div class="an" style="color:#9333ea;">Thread 1: Serial</div>
+            <div class="an" style="color:#9333ea;">Thread 2: Vision · dlib 128D · 0.4 threshold</div>
+            <div class="an" style="color:#9333ea;">Thread 3: Cloud Sync</div>
+          </div>
+        </div>
+        <div class="aconn">↑↓ USB Serial 9600 baud</div>
+        <div class="al" style="background:#FF6B2B;">
+          <div class="al-lbl">ARDUINO MESH · TDM 100ms POLLING</div>
+          <div class="an-row">
+            <div class="an" style="color:#FF6B2B;">Master Uno</div>
+            <div class="an" style="color:#FF6B2B;">R307S Fingerprint</div>
+            <div class="an" style="color:#FF6B2B;">4×4 Keypad</div>
+            <div class="an" style="color:#FF6B2B;">SG90 Servo</div>
+          </div>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="fr" style="border-color:#FF3B30;"><div class="fr-icon" style="background:#FF3B3055;color:#FF3B30;font-weight:900;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3B30" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="17" r="0.5" fill="#FF3B30"/></svg></div><div class="fr-text"><strong>Intruder path:</strong> Face captured → Firebase → Admin grants/denies via web dashboard</div></div>
+        <div class="fr" style="border-color:#FFD60A;"><div class="fr-icon" style="background:#FFD60A55;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFD60A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="13" x2="9" y2="15"/><line x1="9" y1="2" x2="15" y2="2"/></svg></div><div class="fr-text"><strong>Zero-trust:</strong> Python gateway is sole auth authority. No hardware can unlock independently</div></div>
+      </div>
+    </div>
+    <!-- RIGHT: stats + security SVG -->
+    <div style="flex:.75;display:flex;flex-direction:column;gap:10px;align-items:center;">
+      <!-- Security shield SVG -->
+      <svg viewBox="0 0 120 140" width="110" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 60 8 L 108 28 L 108 72 Q 108 112 60 132 Q 12 112 12 72 L 12 28 Z" fill="#FF3B30" opacity=".15"/>
+        <path d="M 60 16 L 100 32 L 100 72 Q 100 106 60 124 Q 20 106 20 72 L 20 32 Z" fill="none" stroke="#FF3B30" stroke-width="3"/>
+        <!-- Camera eye -->
+        <circle cx="60" cy="68" r="22" fill="#1a1a1a" stroke="#FF3B30" stroke-width="2"/>
+        <circle cx="60" cy="68" r="14" fill="#FF3B30" opacity=".3"/>
+        <circle cx="60" cy="68" r="8" fill="#FF3B30"/>
+        <circle cx="56" cy="64" r="3" fill="white" opacity=".6"/>
+        <!-- Scanning line animation -->
+        <line x1="38" y1="68" x2="82" y2="68" stroke="#FF3B30" stroke-width="1.5" opacity=".6">
+          <animateTransform attributeName="transform" type="translate" values="0,0;0,-20;0,20;0,0" dur="2s" repeatCount="indefinite"/>
+        </line>
+      </svg>
+      <div style="display:flex;flex-direction:column;gap:8px;width:100%;">
+        <div class="stat card-r"><div class="stat-n" style="font-size:3.6rem;color:#fff;">96%+</div><div class="stat-l" style="color:#ffcccc;">face recognition accuracy</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="stat card-v"><div class="stat-n" style="font-size:2.2rem;color:#fff;">128D</div><div class="stat-l" style="color:#e0c0ff;">dlib vectors</div></div>
+          <div class="stat card-b"><div class="stat-n" style="font-size:2.2rem;color:#fff;">3</div><div class="stat-l" style="color:#c0deff;">daemon threads</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S06 COUPASO ═══════════════════════════════════ -->
+<section data-auto-animate data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh" style="border-color:rgba(10,132,255,.25);">
+    <span class="sh-n" style="color:#0A84FF;">02</span>
+    <span data-id="pt" class="sh-t" style="color:#0A84FF;">COUPASO ADMIN</span>
+    <span class="sh-cat">E-Commerce · GDPR · Firebase</span>
+  </div>
+  <div class="sb split" style="gap:28px;">
+    <div style="flex:1.1;display:flex;flex-direction:column;gap:10px;">
+      <div class="lbl" style="color:#0A84FF;">28 indexes. designed every single one.</div>
+      <div class="arch">
+        <div class="al" style="background:#FFD60A;">
+          <div class="al-lbl" style="color:#111;">NEXT.JS 14 SPA · 40+ ADMIN PAGES</div>
+          <div class="an-row">
+            <div class="an" style="color:#FFD60A;background:#111;">/users</div>
+            <div class="an" style="color:#FFD60A;background:#111;">/campaigns</div>
+            <div class="an" style="color:#FFD60A;background:#111;">/requests</div>
+            <div class="an" style="color:#FFD60A;background:#111;">/payout</div>
+            <div class="an" style="color:#FFD60A;background:#111;">/openai</div>
+          </div>
+        </div>
+        <div class="aconn">↑↓ Firebase Web SDK</div>
+        <div class="al" style="background:#FF3B30;">
+          <div class="al-lbl">FIREBASE CLOUD</div>
+          <div class="an-row">
+            <div class="an" style="color:#FF3B30;">Firestore · 28 indexes</div>
+            <div class="an" style="color:#FF3B30;">Auth</div>
+            <div class="an" style="color:#FF3B30;">Cloud Functions</div>
+          </div>
+        </div>
+        <div class="aconn">↑↓ REST APIs → Cloud Run (europe-west3)</div>
+        <div class="al" style="background:#0A84FF;">
+          <div class="al-lbl">GOOGLE CLOUD RUN MICROSERVICES</div>
+          <div class="an-row">
+            <div class="an" style="color:#0A84FF;">PayPal Capture</div>
+            <div class="an" style="color:#0A84FF;">XLSX Export</div>
+            <div class="an" style="color:#0A84FF;">BigQuery Sync</div>
+            <div class="an" style="color:#0A84FF;">OpenAI Pre-check</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:#181818;border-radius:7px;padding:10px 12px;">
+        <div class="lbl" style="color:#0A84FF;margin-bottom:7px;">receipt lifecycle</div>
+        <div class="flow">
+          <div class="fn" style="background:#9333ea;color:#fff;">PENDING</div><div class="fa">→</div>
+          <div class="fn" style="background:#FFD60A;color:#111;">AI PRE-CHECK</div><div class="fa">→</div>
+          <div class="fn" style="background:#0A84FF;color:#fff;">HUMAN REVIEW</div><div class="fa">→</div>
+          <div class="fn" style="background:#32D74B;color:#111;">PAYOUT</div>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT -->
+    <div style="flex:.75;display:flex;flex-direction:column;gap:9px;align-items:center;">
+      <!-- Shopping cart + EU flag SVG -->
+      <svg viewBox="0 0 130 110" width="115" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cart -->
+        <path d="M 10 20 L 25 20 L 42 75 L 110 75 L 120 35 L 30 35" stroke="#0A84FF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="50" cy="88" r="8" fill="#0A84FF"/>
+        <circle cx="96" cy="88" r="8" fill="#0A84FF"/>
+        <!-- EU stars (5 around cart) -->
+        <text x="70" y="26" text-anchor="middle" font-size="12" fill="#FFD60A">★★★</text>
+        <text x="70" y="60" text-anchor="middle" font-size="10" fill="#FFD60A" opacity=".7">GDPR ✓</text>
+        <!-- Germany flag mini -->
+        <rect x="88" y="4" width="36" height="7" rx="1" fill="#111"/>
+        <rect x="88" y="11" width="36" height="7" rx="1" fill="#FF3B30"/>
+        <rect x="88" y="18" width="36" height="7" rx="1" fill="#FFD60A"/>
+      </svg>
+      <div style="display:flex;flex-direction:column;gap:8px;width:100%;">
+        <div class="stat card-b"><div class="stat-n" style="font-size:3.6rem;color:#fff;">28</div><div class="stat-l" style="color:#c0deff;">Firestore composite indexes · all 28</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="stat card-g"><div class="stat-n" style="font-size:2.2rem;color:#111;">40+</div><div class="stat-l" style="color:#065f46;">Admin pages</div></div>
+          <div class="stat card-o"><div class="stat-n" style="font-size:2.2rem;color:#fff;">4</div><div class="stat-l" style="color:#fff3e0;">Cloud Run svcs</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S07 GODWIT ════════════════════════════════════ -->
+<section data-auto-animate data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh" style="border-color:rgba(255,107,43,.25);">
+    <span class="sh-n" style="color:#FF6B2B;">03</span>
+    <span data-id="pt" class="sh-t" style="color:#FF6B2B;">GODWIT TRAVEL CRM</span>
+    <span class="sh-cat">Angular · Firebase · Multi-tenant</span>
+  </div>
+  <div class="sb split" style="gap:28px;">
+    <div style="flex:1.1;display:flex;flex-direction:column;gap:11px;">
+      <div class="lbl" style="color:#FF6B2B;">130+ routes and i still remember most of them</div>
+      <!-- Airplane SVG: side view flying right, with origin/route/destination -->
+      <svg viewBox="0 0 360 110" width="100%" style="max-width:340px;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Origin: yellow filled circle with orange ring -->
+        <circle cx="30" cy="55" r="8" fill="#FFD60A" stroke="#FF6B2B" stroke-width="2.5"/>
+        <text x="30" y="86" text-anchor="middle" font-family="Mono,monospace" font-size="9" fill="#FF6B2B" font-weight="700" letter-spacing="1px;">LUDHIANA</text>
+
+        <!-- Dashed flight path -->
+        <line x1="42" y1="55" x2="305" y2="55" stroke="#FF6B2B" stroke-width="2" stroke-dasharray="7,5" opacity=".4"/>
+
+        <!-- Airplane side view, slight nose-up tilt -->
+        <g transform="translate(150,32) rotate(-4)">
+          <!-- Body (long capsule, pointed nose) -->
+          <path d="M 0 23 L 52 19 Q 68 23 52 27 L 0 23 Z" fill="#FF6B2B"/>
+          <!-- Tail fin (swept up) -->
+          <path d="M 4 23 L 9 5 L 22 12 L 16 23 Z" fill="#FF6B2B"/>
+          <!-- Wing (swept back triangle) -->
+          <path d="M 30 23 L 22 8 L 42 14 L 38 23 Z" fill="#FF6B2B" opacity=".75"/>
+          <!-- Engine under wing -->
+          <ellipse cx="34" cy="25" rx="4" ry="2" fill="#FF6B2B" opacity=".7"/>
+          <!-- Window strip -->
+          <rect x="20" y="22" width="22" height="1" fill="#fff" opacity=".75"/>
+          <!-- Cockpit window -->
+          <circle cx="58" cy="22" r="1.4" fill="#fff"/>
+          <!-- Vertical stabilizer accent line -->
+          <line x1="14" y1="14" x2="18" y2="22" stroke="#FF6B2B" stroke-width="1" opacity=".5"/>
+        </g>
+
+        <!-- Destination: green arrowhead -->
+        <polygon points="305,48 322,55 305,62" fill="#32D74B"/>
+        <circle cx="313" cy="55" r="5" fill="none" stroke="#32D74B" stroke-width="1.5" opacity=".5"/>
+        <text x="313" y="86" text-anchor="middle" font-family="Mono,monospace" font-size="9" fill="#32D74B" font-weight="700" letter-spacing="1px;">FRANKFURT</text>
+      </svg>
+      <div class="feat">
+        <div class="fr" style="border-color:#FF6B2B;"><div class="fr-icon" style="background:#FF6B2B55;color:#FF6B2B;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="fr-text"><strong>Angular 10 SPA:</strong> 130+ routes, 35 lazy-loaded modules, AuthGuard + ComponentGuard</div></div>
+        <div class="fr" style="border-color:#0A84FF;"><div class="fr-icon" style="background:#0A84FF55;color:#0A84FF;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="2" stroke-linecap="round"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="16 8 20 12 16 16"/><polyline points="8 8 4 12 8 16"/></svg></div><div class="fr-text"><strong>Dual-mode codebase:</strong> LMS (education) OR CMS (travel) from one admin type flag</div></div>
+        <div class="fr" style="border-color:#32D74B;"><div class="fr-icon" style="background:#32D74B55;color:#32D74B;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#32D74B" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="fr-text"><strong>21-currency engine:</strong> GST invoicing, EMI calc, PDF pipeline (pdfmake + jsPDF)</div></div>
+        <div class="fr" style="border-color:#FFD60A;"><div class="fr-icon" style="background:#FFD60A55;color:#FFD60A;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFD60A" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="20" x2="5" y2="14"/><line x1="12" y1="20" x2="12" y2="8"/><line x1="19" y1="20" x2="19" y2="12"/></svg></div><div class="fr-text"><strong>32 analytics charts:</strong> Staff performance, revenue, campaigns across branch locations</div></div>
+      </div>
+    </div>
+    <div style="flex:.75;display:flex;flex-direction:column;gap:9px;align-items:center;">
+      <div class="stat card-o" style="width:100%;"><div class="stat-n" style="font-size:5rem;color:#fff;">130+</div><div class="stat-l" style="color:#fff;">Angular routes · 35 modules</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;width:100%;">
+        <div class="stat card-r"><div class="stat-n" style="font-size:2rem;color:#fff;">32</div><div class="stat-l" style="color:#ffcccc;">Charts</div></div>
+        <div class="stat card-b"><div class="stat-n" style="font-size:2rem;color:#fff;">21</div><div class="stat-l" style="color:#c0deff;">Currencies</div></div>
+        <div class="stat card-g"><div class="stat-n" style="font-size:2rem;color:#111;">25</div><div class="stat-l" style="color:#065f46;">Services</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S08 GURBANI ═══════════════════════════════════ -->
+<section data-auto-animate data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh" style="border-color:rgba(147,51,234,.25);">
+    <span class="sh-n" style="color:#9333ea;">04</span>
+    <span data-id="pt" class="sh-t" style="color:#9333ea;">GURBANI MADE EASY</span>
+    <span class="sh-cat">Flutter · Firebase · Mobile</span>
+  </div>
+  <div class="sb split" style="gap:28px;">
+    <div style="flex:1.1;display:flex;flex-direction:column;gap:10px;">
+      <div class="lbl" style="color:#9333ea;">4.9 stars. actual real people gave this rating.</div>
+      <div class="feat">
+        <div class="fr" style="border-color:#9333ea;"><div class="fr-icon" style="background:#9333ea55;color:#c084fc;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></div><div class="fr-text"><strong>Flutter 3:</strong> iOS + Android from one Dart codebase, Firebase Phone Auth + Google Sign-In</div></div>
+        <div class="fr" style="border-color:#0A84FF;"><div class="fr-icon" style="background:#0A84FF55;color:#4da6ff;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4da6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><div class="fr-text"><strong>FCM deep links:</strong> NotificationBridge → NotificationRouter → exact screen in app</div></div>
+        <div class="fr" style="border-color:#32D74B;"><div class="fr-icon" style="background:#32D74B55;color:#4ade80;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8L12 3 3 8v8l9 5 9-5V8z"/><line x1="3" y1="8" x2="12" y2="13"/><line x1="12" y1="13" x2="21" y2="8"/></svg></div><div class="fr-text"><strong>Monthly sharding:</strong> posts/YYYY-MM/items. Firestore structured for scale</div></div>
+        <div class="fr" style="border-color:#FFD60A;"><div class="fr-icon" style="background:#FFD60A55;color:#fbbf24;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5" fill="#fbbf24"/></svg></div><div class="fr-text"><strong>Q&A system:</strong> User asks → Admin answers → Cloud Fn fires FCM push automatically</div></div>
+      </div>
+      <!-- FCM flow -->
+      <div style="background:#181818;border-radius:7px;padding:9px 12px;">
+        <div class="flow">
+          <div class="fn" style="background:#9333ea;color:#fff;">Cloud Fn</div><div class="fa">→</div>
+          <div class="fn" style="background:#0A84FF;color:#fff;">FCM payload</div><div class="fa">→</div>
+          <div class="fn" style="background:#32D74B;color:#111;">NotificationBridge</div><div class="fa">→</div>
+          <div class="fn" style="background:#FF6B2B;color:#fff;">Exact screen</div>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT: phone mockup + pikachu + rating -->
+    <div style="flex:.72;display:flex;flex-direction:column;align-items:center;gap:10px;">
+      <!-- Phone mockup -->
+      <div style="width:150px;background:#0d0d0d;border:3px solid #333;border-radius:24px;overflow:hidden;box-shadow:0 0 30px rgba(147,51,234,.25);">
+        <div style="height:16px;background:#111;display:flex;align-items:center;justify-content:center;"><div style="width:44px;height:5px;background:#222;border-radius:3px;"></div></div>
+        <div style="background:#9333ea;padding:8px 10px;"><div style="font-family:'Jakarta';font-size:.74rem;font-weight:800;color:white;">Gurbani Made Easy</div></div>
+        <div style="background:#0d0d0d;padding:7px;display:flex;flex-direction:column;gap:5px;min-height:165px;">
+          <div style="background:#1a1a2e;border-radius:5px;height:50px;display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 90 42" width="90"><rect width="90" height="42" fill="#1a1a2e"/><polygon points="36,12 36,30 52,21" fill="#9333ea" opacity=".9"/><rect x="56" y="15" width="28" height="4" rx="2" fill="#9333ea" opacity=".5"/><rect x="56" y="23" width="20" height="3" rx="1" fill="#9333ea" opacity=".35"/></svg>
+          </div>
+          <div style="background:#1a1a2e;border-radius:5px;padding:7px;"><div style="height:3px;background:#9333ea44;border-radius:2px;width:78%;margin-bottom:4px;"></div><div style="height:3px;background:#9333ea33;border-radius:2px;width:55%;"></div></div>
+          <div style="background:#1a1a2e;border-radius:5px;padding:7px;"><div style="height:3px;background:#0A84FF44;border-radius:2px;width:85%;margin-bottom:4px;"></div><div style="height:3px;background:#0A84FF33;border-radius:2px;width:60%;"></div></div>
+        </div>
+      </div>
+      <!-- Rating + Surprised Pikachu -->
+      <div style="display:flex;align-items:center;gap:8px;width:100%;">
+        <div class="stat card-y" style="flex:1;padding:12px 10px;">
+          <svg viewBox="0 0 90 15" width="80" style="display:block;margin:0 auto 3px;"><text x="0" y="13" font-family="serif" font-size="14" fill="#111">★★★★★</text></svg>
+          <div class="stat-n" style="font-size:2.6rem;color:#111;">4.9</div>
+          <div class="stat-l" style="color:#555;">App Store</div>
+        </div>
+        <!-- Surprised Pikachu -->
+        <svg viewBox="0 0 86 100" width="72" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="43" cy="52" r="40" fill="#FFD60A"/>
+          <circle cx="16" cy="64" r="9" fill="#FF6B6B" opacity=".55"/>
+          <circle cx="70" cy="64" r="9" fill="#FF6B6B" opacity=".55"/>
+          <circle cx="30" cy="44" r="10.5" fill="white"/><circle cx="56" cy="44" r="10.5" fill="white"/>
+          <circle cx="30" cy="46" r="6.5" fill="#1c1917"/><circle cx="56" cy="46" r="6.5" fill="#1c1917"/>
+          <circle cx="33" cy="43" r="2.5" fill="white"/><circle cx="59" cy="43" r="2.5" fill="white"/>
+          <path d="M 10 16 L 3 2 L 24 11 Z" fill="#FFD60A"/><path d="M 10 16 L 5 4 L 23 11 Z" fill="#1c1917"/>
+          <path d="M 76 16 L 83 2 L 62 11 Z" fill="#FFD60A"/><path d="M 76 16 L 81 4 L 63 11 Z" fill="#1c1917"/>
+          <ellipse cx="43" cy="75" rx="11" ry="13" fill="#1c1917"/>
+          <ellipse cx="43" cy="70" rx="8" ry="5.5" fill="#FF6B6B"/>
+          <path d="M 22 31 Q 30 24 40 31" stroke="#1c1917" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <path d="M 46 31 Q 56 24 64 31" stroke="#1c1917" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<!-- ═══ S09 SAP MIDDLEWARE ════════════════════════════ -->
+<section data-auto-animate data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh" style="border-color:rgba(8,145,178,.25);">
+    <span class="sh-n" style="color:#0891b2;">05</span>
+    <span data-id="pt" class="sh-t" style="color:#0891b2;">SAP MIDDLEWARE</span>
+    <span class="sh-cat">Node.js · Express · Docker · Enterprise</span>
+  </div>
+  <div class="sb split" style="gap:28px;">
+    <div style="flex:1.1;display:flex;flex-direction:column;gap:10px;">
+      <div class="lbl" style="color:#0891b2;">the one where i learned what SAP actually is</div>
+      <!-- Proxy arch -->
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <div class="al" style="background:#0891b2;flex:1;">
+          <div class="al-lbl">FRONTEND SPA</div>
+          <div class="an-row"><div class="an" style="color:#0891b2;">POST /route + SAP creds</div></div>
+        </div>
+        <div style="color:#FFD60A;font-size:1.6rem;font-weight:900;">→</div>
+        <div class="al" style="background:#9333ea;flex:1.3;">
+          <div class="al-lbl">EXPRESS.JS GATEWAY</div>
+          <div class="an-row">
+            <div class="an" style="color:#9333ea;">Port 3000</div>
+            <div class="an" style="color:#9333ea;">Stateless</div>
+            <div class="an" style="color:#9333ea;">TypeScript strict</div>
+          </div>
+        </div>
+        <div style="color:#FFD60A;font-size:1.6rem;font-weight:900;">→</div>
+        <div class="al" style="background:#0891b2;flex:1;">
+          <div class="al-lbl">SAP ODATA SERVER</div>
+          <div class="an-row"><div class="an" style="color:#0891b2;">Basic Auth</div></div>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="fr" style="border-color:#0891b2;"><div class="fr-icon" style="background:#0891b255;color:#22d3ee;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="16 8 20 12 16 16"/><polyline points="8 8 4 12 8 16"/></svg></div><div class="fr-text"><strong>Protocol adapter:</strong> REST/JSON → SAP OData with per-request Basic Auth encoding</div></div>
+        <div class="fr" style="border-color:#FFD60A;"><div class="fr-icon" style="background:#FFD60A55;color:#FFD60A;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFD60A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14 C2 10, 6 8, 10 8 L18 8 C20 8, 22 10, 22 13 C22 16, 20 18, 18 18 L6 18 C4 18, 2 16, 2 14 Z"/><path d="M19 11 L21 9"/><path d="M20 13 L22 12"/><circle cx="9" cy="13" r="0.5" fill="#FFD60A"/></svg></div><div class="fr-text"><strong>Docker Alpine multi-stage:</strong> non-root UID 10014 · Node ≤16 for Windows Server 2012 compat</div></div>
+        <div class="fr" style="border-color:#555;"><div class="fr-icon" style="background:#55555555;color:#999;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.18 8c-2.93 0-3.96 2.69-5.4 4.95-1.44 2.26-2.91 4.05-5.78 4.05-2.21 0-4-1.79-4-4s1.79-4 4-4c2.87 0 4.34 1.79 5.78 4.05C14.22 13.31 15.25 16 18.18 16c2.21 0 4-1.79 4-4s-1.79-4-4-4z"/></svg></div><div class="fr-text"><strong>Zero-state proxy:</strong> No sessions, no DB, no cred storage. Pure stateless forwarding</div></div>
+      </div>
+      <!-- Mini Drake meme -->
+      <div class="drake-wrap" style="border:1.5px solid #222;">
+        <div class="dp no" style="min-height:72px;"><div class="dp-face" style="background:#1c0808;width:90px;">
+          <svg viewBox="0 0 70 80" width="70"><circle cx="35" cy="35" r="24" fill="#C8924A"/><path d="M 13 22 Q 35 8 57 22 L 55 13 Q 35 0 15 13Z" fill="#1c1917"/><circle cx="44" cy="31" r="4.5" fill="#1c1917"/><path d="M 29 47 Q 39 42 49 46" stroke="#7a3000" stroke-width="2" fill="none"/><ellipse cx="57" cy="66" rx="11" ry="8" fill="#C8924A"/><rect x="50" y="57" width="8" height="7" rx="3" fill="#C8924A"/></svg>
+        </div><div class="dp-text" style="font-size:.82rem;">"It's just an API, should be quick."</div></div>
+        <div class="dp yes" style="min-height:72px;"><div class="dp-face" style="background:#081c08;width:90px;">
+          <svg viewBox="0 0 70 80" width="70"><circle cx="35" cy="35" r="24" fill="#C8924A"/><path d="M 12 22 Q 35 8 58 22 L 56 12 Q 35 -1 14 12Z" fill="#1c1917"/><circle cx="27" cy="31" r="4.5" fill="#1c1917"/><circle cx="43" cy="31" r="4.5" fill="#1c1917"/><circle cx="29" cy="29" r="2" fill="white"/><circle cx="45" cy="29" r="2" fill="white"/><path d="M 26 46 Q 35 54 44 48" stroke="#7a3000" stroke-width="2.2" fill="none"/><line x1="52" y1="62" x2="72" y2="56" stroke="#C8924A" stroke-width="8" stroke-linecap="round"/></svg>
+        </div><div class="dp-text" style="font-size:.82rem;">OData + custom URL construction + Basic Auth encoding + Windows Server 2012 legacy constraint</div></div>
+      </div>
+    </div>
+    <!-- RIGHT: Math Lady + stats -->
+    <div style="flex:.72;display:flex;flex-direction:column;gap:10px;align-items:center;">
+      <svg viewBox="0 0 150 175" width="138" xmlns="http://www.w3.org/2000/svg">
+        <rect x="35" y="100" width="80" height="65" rx="12" fill="#3355aa"/>
+        <rect x="68" y="89" width="18" height="16" rx="7" fill="#E8C8A0"/>
+        <circle cx="77" cy="64" r="34" fill="#E8C8A0"/>
+        <path d="M 46 46 Q 77 26 108 46 L 106 34 Q 77 16 48 34Z" fill="#3a2010"/>
+        <rect x="44" y="42" width="9" height="32" rx="4.5" fill="#3a2010"/>
+        <rect x="97" y="42" width="9" height="32" rx="4.5" fill="#3a2010"/>
+        <path d="M 55 46 Q 64 39 71 44" stroke="#3a2010" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M 83 44 Q 90 39 99 46" stroke="#3a2010" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <circle cx="64" cy="57" r="6.5" fill="white"/><circle cx="90" cy="57" r="6.5" fill="white"/>
+        <circle cx="64" cy="58" r="4" fill="#1c1917"/><circle cx="90" cy="58" r="4" fill="#1c1917"/>
+        <path d="M 64 76 Q 77 84 90 77 Q 87 88 77 88 Q 67 88 64 76Z" fill="#c09080"/>
+        <text x="2" y="40" font-family="Mono,monospace" font-size="12" fill="#FFD60A" transform="rotate(-18 2 40)">SAP?</text>
+        <text x="116" y="30" font-family="Mono,monospace" font-size="11" fill="#32D74B" transform="rotate(14 116 30)">OData</text>
+        <text x="128" y="95" font-family="Mono,monospace" font-size="10" fill="#0A84FF" transform="rotate(8 128 95)">Basic</text>
+        <text x="130" y="108" font-family="Mono,monospace" font-size="10" fill="#0A84FF" transform="rotate(8 130 108)">Auth???</text>
+        <text x="0" y="110" font-family="Mono,monospace" font-size="10" fill="#FF375F" transform="rotate(-10 0 110)">XML??</text>
+        <text x="4" y="150" font-family="Mono,monospace" font-size="9" fill="#BF5AF2" transform="rotate(-6 4 150)">ODataV2?</text>
+      </svg>
+      <div style="display:flex;flex-direction:column;gap:8px;width:100%;">
+        <div class="stat card-t" style="padding:12px 14px;"><div class="stat-n" style="font-size:1.8rem;color:#fff;">Docker Alpine</div><div class="stat-l" style="color:#cff;">non-root UID 10014 · minimal attack surface</div></div>
+        <div class="stat" style="background:#FFD60A;padding:12px 14px;"><div class="stat-n" style="font-size:1.8rem;color:#111;">TypeScript Strict</div><div class="stat-l" style="color:#555;">ES2020 target · Google style ESLint</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S10 VARDHMAN ══════════════════════════════════ -->
+<section data-auto-animate data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh" style="border-color:rgba(50,215,75,.25);">
+    <span class="sh-n" style="color:#32D74B;">06</span>
+    <span data-id="pt" class="sh-t" style="color:#32D74B;">VARDHMAN TEXTILES</span>
+    <span class="sh-cat">FastAPI · Pandas · HuggingFace · Docker</span>
+  </div>
+  <div class="sb split" style="gap:28px;">
+    <div style="flex:1.1;display:flex;flex-direction:column;gap:9px;">
+      <div class="lbl" style="color:#32D74B;">AI for india's actual textile industry · 4 sub-products</div>
+      <!-- 4 sub-tiles · solid accent cards for projector visibility -->
+      <div style="display:flex;flex-direction:column;gap:7px;flex:1;">
+        <div class="al" style="background:#32D74B;padding:9px 13px;">
+          <div class="al-lbl" style="color:#111;">6a · AURO DYEING AI</div>
+          <div style="font-size:.88rem;color:#111;font-family:'Jakarta';font-weight:700;line-height:1.3;">Yarn dyeing planning · FastAPI 17 endpoints · Pandas 1069-line compute · multi-scenario</div>
+        </div>
+        <div class="al" style="background:#0891b2;padding:9px 13px;">
+          <div class="al-lbl">6b · PROCESS-AWARE AI · GREIGE INTELLIGENCE</div>
+          <div style="font-size:.88rem;color:#fff;font-family:'Jakarta';font-weight:700;line-height:1.3;"><strong style="color:#FFD60A;">2307-line</strong> data engine · 18 endpoints · waterfall blame analysis · MAE 13.92</div>
+        </div>
+        <div class="al" style="background:#9333ea;padding:9px 13px;">
+          <div class="al-lbl">6c · PDC INTELLIGENCE</div>
+          <div style="font-size:.88rem;color:#fff;font-family:'Jakarta';font-weight:700;line-height:1.3;">5-case cascade search · reed calc · count converter · Penelope CAD XML export</div>
+        </div>
+        <div class="al" style="background:#FFD60A;padding:9px 13px;">
+          <div class="al-lbl" style="color:#111;">6d · NORMSUI GREIGE CALCULATOR</div>
+          <div style="font-size:.88rem;color:#111;font-family:'Jakarta';font-weight:700;line-height:1.3;">Next.js 16 static · 18 norm rules · zero-backend · instant calculation</div>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT: stats + textile SVG -->
+    <div style="flex:.72;display:flex;flex-direction:column;gap:9px;align-items:center;">
+      <!-- Textile/loom SVG -->
+      <svg viewBox="0 0 130 100" width="120" xmlns="http://www.w3.org/2000/svg">
+        <!-- Loom frame -->
+        <rect x="10" y="10" width="110" height="80" rx="6" fill="none" stroke="#32D74B" stroke-width="2.5"/>
+        <!-- Vertical warp threads -->
+        <line x1="26" y1="10" x2="26" y2="90" stroke="#32D74B" stroke-width="1.5" opacity=".6"/>
+        <line x1="42" y1="10" x2="42" y2="90" stroke="#32D74B" stroke-width="1.5" opacity=".6"/>
+        <line x1="58" y1="10" x2="58" y2="90" stroke="#32D74B" stroke-width="1.5" opacity=".6"/>
+        <line x1="74" y1="10" x2="74" y2="90" stroke="#32D74B" stroke-width="1.5" opacity=".6"/>
+        <line x1="90" y1="10" x2="90" y2="90" stroke="#32D74B" stroke-width="1.5" opacity=".6"/>
+        <line x1="106" y1="10" x2="106" y2="90" stroke="#32D74B" stroke-width="1.5" opacity=".6"/>
+        <!-- Horizontal weft threads (colorful) -->
+        <line x1="10" y1="26" x2="120" y2="26" stroke="#FFD60A" stroke-width="2.5"/>
+        <line x1="10" y1="42" x2="120" y2="42" stroke="#0A84FF" stroke-width="2.5"/>
+        <line x1="10" y1="58" x2="120" y2="58" stroke="#FF375F" stroke-width="2.5"/>
+        <line x1="10" y1="74" x2="120" y2="74" stroke="#FFD60A" stroke-width="2.5"/>
+        <!-- AI badge -->
+        <rect x="42" y="38" width="46" height="24" rx="5" fill="#0a0a0a" stroke="#32D74B" stroke-width="2"/>
+        <text x="65" y="54" text-anchor="middle" font-family="Bebas,Impact" font-size="14" fill="#32D74B">AI</text>
+      </svg>
+      <div class="stat card-g" style="width:100%;">
+        <div class="stat-n" style="font-size:4.5rem;color:#111;" data-count="2307">2307</div>
+        <div class="stat-l" style="color:#065f46;">lines · process data service<br>and yes, they all do something</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+        <div class="stat card-b"><div class="stat-n" style="font-size:2rem;color:#fff;">18</div><div class="stat-l" style="color:#c0deff;">FastAPI endpoints</div></div>
+        <div class="stat card-y"><div class="stat-n" style="font-size:2rem;color:#111;">10</div><div class="stat-l" style="color:#555;">Pytest tests</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S11 MENTCAPE ══════════════════════════════════ -->
+<section data-auto-animate data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh" style="border-color:rgba(255,55,95,.25);">
+    <span class="sh-n" style="color:#FF375F;">07</span>
+    <span data-id="pt" class="sh-t" style="color:#FF375F;">MENTCAPE</span>
+    <span class="sh-cat">GKE · tRPC · React Native · KBV · DSGVO</span>
+  </div>
+  <div class="sb split" style="gap:28px;">
+    <div style="flex:1.1;display:flex;flex-direction:column;gap:10px;">
+      <div class="lbl" style="color:#FF375F;">the one deployed in germany. yes, germany.</div>
+      <div class="arch">
+        <div class="al" style="background:#FF375F;">
+          <div class="al-lbl">TURBOREPO MONOREPO</div>
+          <div class="an-row">
+            <div class="an" style="color:#FF375F;">Patient Web (Next.js)</div>
+            <div class="an" style="color:#FF375F;">Therapist CRM (Prisma)</div>
+            <div class="an" style="color:#FF375F;">Mobile (React Native)</div>
+            <div class="an" style="color:#FF375F;">tRPC API (Node.js)</div>
+          </div>
+        </div>
+        <div class="aconn">deployed on GKE Frankfurt (europe-west3). All data in Germany</div>
+        <div class="al" style="background:#32D74B;">
+          <div class="al-lbl" style="color:#111;">INFRASTRUCTURE</div>
+          <div class="an-row">
+            <div class="an" style="color:#32D74B;background:#111;">LiveKit SFU (KBV-cert)</div>
+            <div class="an" style="color:#32D74B;background:#111;">Postgres 15 + Redis</div>
+            <div class="an" style="color:#32D74B;background:#111;">Grafana + Prometheus</div>
+            <div class="an" style="color:#32D74B;background:#111;">ElevenLabs German TTS</div>
+          </div>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="fr" style="border-color:#FF375F;"><div class="fr-icon" style="background:#FF375F55;color:#ff8099;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff8099" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.7V16a3 3 0 0 0 3 3h1a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0 3-3v-2.3A3 3 0 0 0 18 8V7a3 3 0 0 0-3-3 3 3 0 0 0-3 1 3 3 0 0 0-3-1z"/></svg></div><div class="fr-text"><strong>Verzahnte Psychotherapie:</strong> Blended care. Digital self-help deeply interleaved with therapist sessions</div></div>
+        <div class="fr" style="border-color:#0A84FF;"><div class="fr-icon" style="background:#0A84FF55;color:#4da6ff;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4da6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div><div class="fr-text"><strong>8 CBT modules:</strong> Panic, anxiety, OCD, depression, burnout · PHQ/GAD psychometric tests built in</div></div>
+        <div class="fr" style="border-color:#FFD60A;"><div class="fr-icon" style="background:#FFD60A55;color:#fbbf24;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a3 3 0 0 0 3 3"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="18" x2="12" y2="20"/></svg></div><div class="fr-text"><strong>CME accredited:</strong> 2-3 points per Fortbildungskurs. Therapists earn CPD credits in the same platform</div></div>
+      </div>
+    </div>
+    <!-- RIGHT: shock stat + Wojak -->
+    <div style="flex:.72;display:flex;flex-direction:column;gap:10px;align-items:center;">
+      <div style="display:flex;align-items:center;gap:10px;width:100%;">
+        <div class="stat card-p" style="flex:1;padding:18px 14px;">
+          <div class="mn" style="font-size:.62rem;color:#ffccd5;margin-bottom:6px;text-transform:uppercase;letter-spacing:.1em;">avg wait for therapy in Germany</div>
+          <div class="stat-n" style="font-size:4rem;color:#fff;">5 to 9</div>
+          <div class="bb" style="font-size:1.8rem;color:#fff;line-height:1;">MONTHS</div>
+          <div class="mn" style="font-size:.64rem;color:#ffccd5;margin-top:6px;">Mentcape: book within hours</div>
+        </div>
+        <!-- Wojak crying -->
+        <svg viewBox="0 0 88 105" width="74" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="44" cy="54" r="40" fill="#E8D5C0"/>
+          <path d="M 12 34 Q 44 12 76 34 L 74 22 Q 44 4 14 22Z" fill="#5a3a1a"/>
+          <ellipse cx="8" cy="58" rx="8" ry="12" fill="#E0C8B0" stroke="#c0a090" stroke-width="1.5"/>
+          <ellipse cx="80" cy="58" rx="8" ry="12" fill="#E0C8B0" stroke="#c0a090" stroke-width="1.5"/>
+          <path d="M 28 47 Q 35 40 42 47 Q 35 44 28 47Z" fill="#1c1917"/>
+          <path d="M 46 47 Q 53 40 60 47 Q 53 44 46 47Z" fill="#1c1917"/>
+          <path d="M 30 54 Q 26 64 28 74" stroke="#60a0ff" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          <path d="M 36 56 Q 33 67 35 77" stroke="#80b0ff" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M 58 54 Q 62 64 60 74" stroke="#60a0ff" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          <path d="M 52 56 Q 55 67 53 77" stroke="#80b0ff" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M 32 80 Q 44 74 56 80" stroke="#9a7060" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="44" cy="64" rx="5.5" ry="3.5" fill="#c8a888"/>
+        </svg>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+        <div class="stat card-p"><div class="stat-n" style="font-size:1.8rem;color:#fff;">KBV ✓</div><div class="stat-l" style="color:#ffd0db;">Certified video</div></div>
+        <div class="stat card-g"><div class="stat-n" style="font-size:1.8rem;color:#111;">626</div><div class="stat-l" style="color:#065f46;">LinkedIn followers</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S12 TECH STACK ════════════════════════════════ -->
+<section data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh">
+    <span class="sh-n" style="color:#FFD60A;">08</span>
+    <span class="sh-t" style="color:#FFD60A;">TECH STACK</span>
+    <span class="sh-cat">All tools used in actual production</span>
+  </div>
+  <div class="sb split" style="gap:28px;align-items:flex-start;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+      <!-- Terminal window SVG header -->
+      <div style="background:#1a1a1a;border-radius:9px;padding:8px 14px;display:flex;align-items:center;gap:8px;border:1.5px solid #2a2a2a;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#FF375F;"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#FFD60A;"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#32D74B;"></div>
+        <div class="mn" style="font-size:.68rem;color:#666;margin-left:8px;">ishpreet@auribises · tech-stack.sh</div>
+      </div>
+      <div class="term" style="flex:1;font-size:.77rem;">
+        <div><span class="tc"># yes, all of these. in actual production. no cap.</span></div>
+        <div><span class="tc"># Frontend</span></div>
+        <div><span class="tk">frameworks</span><span class="td"> = </span><span class="tv">Next.js 14/15/16</span><span class="td"> · </span><span class="tv">React 18/19</span><span class="td"> · </span><span class="tv">Angular 10</span><span class="td"> · </span><span class="tv">Flutter 3</span><span class="td"> · </span><span class="tv">React Native</span></div>
+        <div><span class="tk">styling   </span><span class="td"> = </span><span class="tv">Tailwind v3/v4</span><span class="td"> · </span><span class="tv">shadcn/ui</span><span class="td"> · </span><span class="tv">NextUI</span><span class="td"> · </span><span class="tv">Framer Motion</span></div>
+        <div class="tc" style="margin-top:4px;"># Backend</div>
+        <div><span class="tk">servers   </span><span class="td"> = </span><span class="tv">FastAPI + Uvicorn</span><span class="td"> · </span><span class="tv">Express.js</span><span class="td"> · </span><span class="tv">tRPC</span><span class="td"> · </span><span class="tv">Firebase Fns Node20</span></div>
+        <div><span class="tk">databases </span><span class="td"> = </span><span class="tv">Firestore</span><span class="td"> · </span><span class="tv">PostgreSQL 15</span><span class="td"> · </span><span class="tv">Redis</span><span class="td"> · </span><span class="tv">BigQuery</span><span class="td"> · </span><span class="tv">Algolia</span></div>
+        <div class="tc" style="margin-top:4px;"># AI / ML</div>
+        <div><span class="tk">compute   </span><span class="td"> = </span><span class="tv">dlib + face_recognition (128D)</span><span class="td"> · </span><span class="tv">OpenCV</span><span class="td"> · </span><span class="tv">Pandas 3</span><span class="td"> · </span><span class="tv">NumPy 2</span></div>
+        <div><span class="tk">external  </span><span class="td"> = </span><span class="tv">OpenAI GPT-4 Vision</span><span class="td"> · </span><span class="tv">ElevenLabs German TTS</span><span class="td"> · </span><span class="tv">PayPal API</span></div>
+        <div class="tc" style="margin-top:4px;"># DevOps / Cloud</div>
+        <div><span class="tk">deploy    </span><span class="td"> = </span><span class="tv">Docker Alpine multi-stage</span><span class="td"> · </span><span class="tv">GKE Frankfurt</span><span class="td"> · </span><span class="tv">Cloud Run</span><span class="td"> · </span><span class="tv">HuggingFace Spaces</span></div>
+        <div><span class="tk">obs       </span><span class="td"> = </span><span class="tv">Grafana</span><span class="td"> · </span><span class="tv">Prometheus</span><span class="td"> · </span><span class="tv">Sentry</span><span class="td"> · </span><span class="tv">ArgoCD + GitHub Actions</span></div>
+        <div class="tc" style="margin-top:4px;"># Hardware / IoT</div>
+        <div><span class="tk">embedded  </span><span class="td"> = </span><span class="tv">Arduino C++</span><span class="td"> · </span><span class="tv">R307S Fingerprint</span><span class="td"> · </span><span class="tv">SoftwareSerial TDM</span><span class="td"> · </span><span class="tv">SG90 servo</span></div>
+      </div>
+    </div>
+    <!-- Right: skill category cards -->
+    <div style="flex:.55;display:flex;flex-direction:column;gap:8px;">
+      <div class="stat card-b" style="padding:12px 14px;text-align:left;"><div style="font-family:'Bebas';font-size:1.5rem;color:#fff;">FRONTEND</div><div style="font-size:.78rem;color:#c0deff;font-family:'Mono';margin-top:3px;">React · Angular · Flutter · Next.js</div></div>
+      <div class="stat card-r" style="padding:12px 14px;text-align:left;"><div style="font-family:'Bebas';font-size:1.5rem;color:#fff;">BACKEND + AI</div><div style="font-size:.78rem;color:#ffcccc;font-family:'Mono';margin-top:3px;">FastAPI · tRPC · dlib · OpenCV</div></div>
+      <div class="stat card-g" style="padding:12px 14px;text-align:left;"><div style="font-family:'Bebas';font-size:1.5rem;color:#111;">CLOUD + DEVOPS</div><div style="font-size:.78rem;color:#065f46;font-family:'Mono';margin-top:3px;">GKE · Docker · Firebase · HuggingFace</div></div>
+      <div class="stat card-y" style="padding:12px 14px;text-align:left;"><div style="font-family:'Bebas';font-size:1.5rem;color:#111;">IoT + HARDWARE</div><div style="font-size:.78rem;color:#555;font-family:'Mono';margin-top:3px;">Arduino · SoftwareSerial · PWM · TDM</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S13 METRICS ═══════════════════════════════════ -->
+<section data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh">
+    <span class="sh-n" style="color:#FFD60A;">09</span>
+    <span class="sh-t">BY THE NUMBERS</span>
+    <span class="sh-cat">Impact at scale</span>
+  </div>
+  <div class="sb col" style="gap:10px;">
+    <!-- All solid colored · projector safe -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;flex:1;">
+      <div class="stat card-y" style="padding:20px 16px;">
+        <div class="stat-n" style="font-size:5rem;color:#111;" data-count="7">7</div>
+        <div class="stat-l" style="color:#333;">production projects<br>shipped in 6 months</div>
+      </div>
+      <div class="stat card-r" style="padding:20px 16px;">
+        <div class="stat-n" style="font-size:5rem;color:#fff;">96%+</div>
+        <div class="stat-l" style="color:#ffcccc;">face recognition accuracy<br>33% stricter than dlib default</div>
+      </div>
+      <div class="stat card-v" style="padding:20px 16px;">
+        <div class="stat-n" style="font-size:5rem;color:#fff;" data-count="4.9">4.9</div>
+        <div class="stat-l" style="color:#e9d5ff;">App Store rating<br>i did not review it myself</div>
+      </div>
+      <div class="stat card-g" style="padding:20px 16px;">
+        <div class="stat-n" style="font-size:5rem;color:#111;" data-count="2307">2307</div>
+        <div class="stat-l" style="color:#065f46;">lines in one service<br>my hands are fine. thanks.</div>
+      </div>
+      <div class="stat card-b" style="padding:20px 16px;">
+        <div class="stat-n" style="font-size:5rem;color:#fff;" data-count="28">28</div>
+        <div class="stat-l" style="color:#c0deff;">Firestore indexes<br>designed by hand. all 28.</div>
+      </div>
+      <div class="stat card-o" style="padding:20px 16px;">
+        <div class="stat-n" style="font-size:5rem;color:#fff;">130+</div>
+        <div class="stat-l" style="color:#fff3e0;">Angular routes in Godwit<br>i wrote them. not memorized.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S14 EXPANDING BRAIN ════════════════════════════ -->
+<section data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh">
+    <span class="sh-n">10</span>
+    <span class="sh-t">THE LEARNING CURVE</span>
+    <span class="sh-cat">6-month brain expansion, visualised</span>
+  </div>
+  <div class="sb col" style="gap:7px;">
+    <div class="bm" style="flex:1;">
+      <div class="br" style="background:#141414;flex:1;">
+        <div class="br-face">
+          <svg viewBox="0 0 54 54" width="50"><circle cx="27" cy="27" r="23" fill="#888"/><circle cx="18" cy="24" r="4" fill="#555"/><circle cx="36" cy="24" r="4" fill="#555"/><path d="M 20 36 Q 27 40 34 36" stroke="#666" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div class="br-text"><strong style="color:#fff;">"Thought I knew full-stack. I knew jQuery."</strong><br><em style="color:#666;font-size:.82rem;">first professional code. react components. rest apis.</em></div>
+        <div style="margin-left:auto;font-family:'Mono';font-size:.62rem;color:#555;">2021</div>
+      </div>
+      <div class="br" style="background:#08101a;border-color:#0A84FF44;flex:1;">
+        <div class="br-face">
+          <svg viewBox="0 0 54 54" width="50"><circle cx="27" cy="27" r="23" fill="#E8D5C0"/><circle cx="19" cy="24" r="3" fill="#1c1917"/><circle cx="35" cy="24" r="3" fill="#1c1917"/><path d="M 18 36 Q 27 42 36 36" stroke="#9a7060" stroke-width="2" fill="none"/></svg>
+        </div>
+        <div class="br-text" style="color:#60aaff;"><strong>"200+ daily active users. Production at 2am. Real consequences."</strong><br><span style="font-size:.82rem;color:#0A84FF;">learned to ship. fast.</span></div>
+        <div style="margin-left:auto;font-family:'Mono';font-size:.62rem;color:#0A84FF;">2023-24</div>
+      </div>
+      <div class="br" style="background:#0d0a18;border-color:#9333ea44;flex:1;">
+        <div class="br-face">
+          <svg viewBox="0 0 54 54" width="50"><circle cx="27" cy="27" r="23" fill="#E8D5C0"/><rect x="12" y="22" width="12" height="9" rx="2.5" fill="none" stroke="#1c1917" stroke-width="1.8"/><rect x="30" y="22" width="12" height="9" rx="2.5" fill="none" stroke="#1c1917" stroke-width="1.8"/><line x1="24" y1="26.5" x2="30" y2="26.5" stroke="#1c1917" stroke-width="1.5"/><circle cx="18" cy="26.5" r="2.5" fill="#1c1917"/><circle cx="36" cy="26.5" r="2.5" fill="#1c1917"/><path d="M 18 38 Q 27 44 36 38" stroke="#9a7060" stroke-width="2" fill="none"/><circle cx="48" cy="9" r="4.5" fill="#0A84FF" opacity=".8"/><circle cx="52" cy="16" r="3" fill="#0A84FF" opacity=".6"/></svg>
+        </div>
+        <div class="br-text" style="color:#c084fc;"><strong>11k+ users. 3 engineers trained. Agentic AI wasn't a buzzword anymore.</strong><br><span style="font-size:.82rem;color:#9333ea;">CI/CD. LLMs. Real SaaS.</span></div>
+        <div style="margin-left:auto;font-family:'Mono';font-size:.62rem;color:#9333ea;">2024-25</div>
+      </div>
+      <div class="br" style="background:#0d0a08;border-color:#FFD60A44;flex:1;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 10% 50%,rgba(255,214,10,.05),transparent 60%);pointer-events:none;"></div>
+        <div class="br-face" style="position:relative;z-index:1;">
+          <svg viewBox="0 0 54 54" width="50"><circle cx="27" cy="27" r="26" fill="none" stroke="#FF375F" stroke-width="1" opacity=".5"><animate attributeName="r" values="26;28;26" dur="2s" repeatCount="indefinite"/></circle><circle cx="27" cy="27" r="20" fill="none" stroke="#9333ea" stroke-width="1.5" opacity=".6"/><circle cx="27" cy="27" r="14" fill="none" stroke="#0A84FF" stroke-width="2" opacity=".7"/><circle cx="27" cy="27" r="8" fill="none" stroke="#32D74B" stroke-width="2" opacity=".8"/><circle cx="27" cy="27" r="4" fill="#FFD60A" opacity=".95"/></svg>
+        </div>
+        <div class="br-text" style="color:#FFD60A;font-weight:800;position:relative;z-index:1;">7 production systems across 3 countries. IoT face recognition. GDPR healthcare. Edge-to-cloud.<br><em style="color:#888;font-size:.8rem;font-weight:400;">week 24. became a different developer.</em></div>
+        <div style="margin-left:auto;font-family:'Mono';font-size:.62rem;color:#FFD60A;position:relative;z-index:1;">2025-26</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S15 MEME SLIDE ════════════════════════════════ -->
+<section data-background-color="#0a0a0a">
+<div class="sw">
+  <div class="sh">
+    <span class="sh-n">11</span>
+    <span class="sh-t">REAL TALK</span>
+    <span class="sh-cat">honest representation</span>
+  </div>
+  <div class="sb split" style="gap:24px;align-items:center;">
+    <!-- Drake meme -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+      <div class="lbl" style="color:#666;margin-bottom:2px;">a tale of two developers</div>
+      <div class="drake-wrap" style="border:2px solid #222;">
+        <div class="dp no"><div class="dp-face" style="background:#1c0808;">
+          <svg viewBox="0 0 60 80" width="78" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="52" width="44" height="28" rx="6" fill="#222"/>
+            <rect x="20" y="44" width="14" height="10" rx="4" fill="#C8924A"/>
+            <circle cx="28" cy="26" r="18" fill="#C8924A"/>
+            <path d="M 12 16 Q 16 8 28 8 Q 40 8 44 16 Q 46 20 44 24 Q 40 16 32 12 Q 24 10 16 14 Q 12 16 12 20Z" fill="#1c1917"/>
+            <line x1="16" y1="19" x2="22" y2="22" stroke="#1c1917" stroke-width="2" stroke-linecap="round"/>
+            <line x1="38" y1="19" x2="32" y2="22" stroke="#1c1917" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="20" cy="25" r="2" fill="#1c1917"/>
+            <circle cx="36" cy="25" r="2" fill="#1c1917"/>
+            <ellipse cx="28" cy="30" rx="2.5" ry="1.5" fill="#B07830"/>
+            <path d="M 20 36 Q 24 33 28 35 Q 32 33 36 36" stroke="#7a3000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M 22 38 Q 24 42 28 42 Q 32 42 34 38" fill="#1c1917"/>
+            <path d="M 48 54 Q 54 48 52 42" stroke="#C8924A" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <circle cx="52" cy="40" r="4.5" fill="#C8924A"/>
+          </svg>
+        </div><div class="dp-text" style="font-size:.85rem;">Tutorials. Permission. Building what I'm told.</div></div>
+        <div class="dp yes" style="border-top:1px solid #1a1a1a;"><div class="dp-face" style="background:#081c08;">
+          <svg viewBox="0 0 60 80" width="78" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="52" width="44" height="28" rx="6" fill="#222"/>
+            <rect x="20" y="44" width="14" height="10" rx="4" fill="#C8924A"/>
+            <circle cx="28" cy="26" r="18" fill="#C8924A"/>
+            <path d="M 12 16 Q 16 8 28 8 Q 40 8 44 16 Q 46 20 44 24 Q 40 16 32 12 Q 24 10 16 14 Q 12 16 12 20Z" fill="#1c1917"/>
+            <path d="M 16 17 Q 20 14 24 17" stroke="#1c1917" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M 32 17 Q 36 14 40 17" stroke="#1c1917" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <circle cx="21" cy="23" r="2.5" fill="#1c1917"/>
+            <circle cx="35" cy="23" r="2.5" fill="#1c1917"/>
+            <circle cx="22" cy="22" r="1" fill="white"/>
+            <circle cx="36" cy="22" r="1" fill="white"/>
+            <ellipse cx="28" cy="28" rx="2.5" ry="1.5" fill="#B07830"/>
+            <path d="M 20 34 Q 24 38 28 38 Q 32 38 36 34" stroke="#7a3000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M 22 38 Q 24 42 28 42 Q 32 42 34 38" fill="#1c1917"/>
+            <path d="M 48 54 Q 54 48 56 40 L 58 36" stroke="#C8924A" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <circle cx="59" cy="34" r="2" fill="#C8924A"/>
+          </svg>
+        </div><div class="dp-text" style="font-size:.85rem;">11k+ users · 3 countries · IoT · AI · Healthcare</div></div>
+        <div class="dp woj" style="border-top:1px solid #1a1a1a;"><div class="dp-face" style="background:#10101a;">
+          <svg viewBox="0 0 70 80" width="78"><circle cx="35" cy="40" r="28" fill="#E8D5C0"/><path d="M 10 27 Q 35 10 60 27 L 58 18 Q 35 4 12 18Z" fill="#5a3a1a"/><ellipse cx="6" cy="42" rx="6" ry="10" fill="#E0C8B0"/><ellipse cx="64" cy="42" rx="6" ry="10" fill="#E0C8B0"/><path d="M 20 34 Q 27 27 34 34 Q 27 31 20 34Z" fill="#1c1917"/><path d="M 36 34 Q 43 27 50 34 Q 43 31 36 34Z" fill="#1c1917"/><path d="M 22 42 Q 18 52 20 60" stroke="#60a0ff" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M 48 42 Q 52 52 50 60" stroke="#60a0ff" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M 24 64 Q 35 58 46 64" stroke="#9a7060" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+        </div><div class="dp-text" style="font-size:.85rem;">Me explaining to my family what I actually do</div></div>
+      </div>
+    </div>
+    <!-- This is Fine dog -->
+    <div style="flex:.85;display:flex;flex-direction:column;align-items:center;gap:10px;">
+      <div class="lbl" style="color:#666;">me debugging production at 2am</div>
+      <svg viewBox="0 0 280 234" width="270" xmlns="http://www.w3.org/2000/svg">
+        <rect width="280" height="234" fill="#CC7A18" rx="8"/>
+        <rect y="186" width="280" height="48" fill="#AA6214"/>
+        <rect x="72" y="162" width="136" height="11" rx="3" fill="#8B4513"/><rect x="88" y="173" width="10" height="43" fill="#7a3c0e"/><rect x="182" y="173" width="10" height="43" fill="#7a3c0e"/>
+        <g style="animation:fireFlicker .4s ease-in-out infinite alternate;transform-origin:38px 210px;">
+          <path d="M 12 228 Q 23 188 33 212 Q 43 175 55 206 Q 62 186 56 228Z" fill="#FF4500"/>
+          <path d="M 16 228 Q 26 200 33 218 Q 42 188 51 210Z" fill="#FFD700"/>
+        </g>
+        <g style="animation:fireFlicker .5s ease-in-out infinite alternate-reverse;transform-origin:228px 210px;">
+          <path d="M 218 228 Q 230 188 240 212 Q 252 172 262 204 Q 270 185 266 228Z" fill="#FF4500"/>
+          <path d="M 224 228 Q 234 198 242 216 Q 254 180 260 208Z" fill="#FFD700"/>
+        </g>
+        <ellipse cx="140" cy="164" rx="46" ry="33" fill="#E8A030" stroke="#9c6010" stroke-width="2"/>
+        <circle cx="140" cy="120" r="30" fill="#E8A030" stroke="#9c6010" stroke-width="2"/>
+        <ellipse cx="116" cy="103" rx="10" ry="18" fill="#D49020" stroke="#9c6010" stroke-width="1.5" transform="rotate(-8 116 103)"/>
+        <ellipse cx="164" cy="103" rx="10" ry="18" fill="#D49020" stroke="#9c6010" stroke-width="1.5" transform="rotate(8 164 103)"/>
+        <path d="M 130 115 Q 137 110 144 115" stroke="#1c1917" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M 144 115 Q 151 110 158 115" stroke="#1c1917" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="140" cy="127" rx="6" ry="4.5" fill="#1c1917"/>
+        <path d="M 130 136 Q 140 143 150 136" stroke="#9c6010" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <rect x="124" y="150" width="26" height="18" rx="3" fill="white" stroke="#9c6010" stroke-width="1.8"/>
+        <path d="M 150 155 Q 157 155 157 162 Q 157 169 150 169" stroke="#9c6010" stroke-width="1.8" fill="none"/>
+        <path d="M 130 148 Q 132 142 130 136" stroke="#bbb" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="106" cy="166" rx="16" ry="8" fill="#E8A030" stroke="#9c6010" stroke-width="1.5"/>
+        <ellipse cx="174" cy="166" rx="16" ry="8" fill="#E8A030" stroke="#9c6010" stroke-width="1.5"/>
+        <rect x="170" y="72" width="105" height="75" rx="8" fill="white" stroke="#9c6010" stroke-width="2"/>
+        <path d="M 182 147 L 172 161 L 200 147Z" fill="white" stroke="#9c6010" stroke-width="2" stroke-linejoin="round"/>
+        <text x="222" y="88" text-anchor="middle" fill="#1c1917" font-weight="800" font-size="12" font-family="Jakarta,sans-serif">This is fine.</text>
+        <text x="222" y="104" text-anchor="middle" fill="#666" font-size="8.5" font-family="Mono,monospace">DB went down.</text>
+        <text x="222" y="115" text-anchor="middle" fill="#666" font-size="8.5" font-family="Mono,monospace">Autoscaler died.</text>
+        <text x="222" y="126" text-anchor="middle" fill="#666" font-size="8.5" font-family="Mono,monospace">Backups failed.</text>
+        <text x="222" y="137" text-anchor="middle" fill="#666" font-size="8.5" font-family="Mono,monospace">Pager muted.</text>
+      </svg>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S16 THANK YOU ════════════════════════════════ -->
+<section data-background-color="#0a0a0a" id="slide-fin">
+<div class="sw">
+  <div class="sh" style="border-color:rgba(255,214,10,.2);">
+    <span class="sh-n" style="color:#FFD60A;">FIN</span>
+    <span class="sh-t" style="color:#FFD60A;">THANK YOU</span>
+    <span class="sh-cat">go touch grass. the presentation is over.</span>
+  </div>
+  <div class="sb split" style="gap:0;align-items:center;">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;">
+      <div class="bb d1 w" style="font-size:clamp(5rem,10vw,9.5rem);line-height:.88;letter-spacing:3px;">THANK</div>
+      <div class="bb" style="font-size:clamp(5rem,10vw,9.5rem);line-height:.88;letter-spacing:3px;color:#FFD60A;">YOU.</div>
+      <div style="height:3px;width:100%;background:linear-gradient(90deg,#FFD60A,transparent);margin:4px 0;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:500px;">
+        <div style="background:#FFD60A;border-radius:9px;padding:14px 12px;">
+          <div class="bb" style="font-size:1.6rem;color:#111;">ISHPREET SINGH</div>
+          <div class="mn" style="font-size:.62rem;color:#555;margin-top:3px;">Roll 1030 · Reg 230179501386</div>
+        </div>
+        <div style="background:#1a1a1a;border:2px solid #333;border-radius:9px;padding:14px 12px;">
+          <div class="bb" style="font-size:1.1rem;color:#32D74B;">7 PROJECTS</div>
+          <div class="bb" style="font-size:1.1rem;color:#0A84FF;">IN + DE</div>
+          <div class="bb" style="font-size:1.1rem;color:#FF375F;">JAN to JUN 2026</div>
+        </div>
+      </div>
+      <div class="mn" style="font-size:.68rem;color:#444;margin-top:2px;">Mentors: Aman Bhardawaj (College) · Ishant Kumar (Auribises Technologies)</div>
+    </div>
+    <!-- Waving Sikh character -->
+    <div style="flex:.75;display:flex;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 200 290" width="220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="210" width="180" height="72" rx="8" fill="#1c2030"/>
+        <rect x="17" y="218" width="166" height="56" rx="5" fill="#0d1117"/>
+        <rect x="24" y="227" width="48" height="4" rx="2" fill="#22d3ee"/>
+        <rect x="32" y="237" width="36" height="4" rx="2" fill="#86efac"/>
+        <rect x="24" y="247" width="62" height="4" rx="2" fill="#fca5a5"/>
+        <rect x="24" y="257" width="30" height="4" rx="2" fill="#22d3ee"/>
+        <rect x="10" y="280" width="180" height="6" rx="3" fill="#2a3040"/>
+        <!-- Body -->
+        <rect x="54" y="154" width="92" height="60" rx="14" fill="#2563eb"/>
+        <!-- Neck -->
+        <rect x="88" y="146" width="24" height="14" rx="7" fill="#E8C8A0"/>
+        <!-- Face base behind source character -->
+        <circle cx="100" cy="118" r="38" fill="#E8C8A0"/>
+        <!-- === SOURCE: face + turban, scaled for S16 === -->
+        <g transform="translate(33,45) scale(2.8)">
+          <path d="M24,5C15.9,5,9.4,11.5,9.4,19.6v7.6h29.2v-7.6C38.6,11.5,32.1,5,24,5z" fill="#666666" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M40.2,26.1c-0.1-1.1-1-2-2.1-2.3l-0.9-0.2C35.9,23.2,35,22,35,20.7v-3.1c0-1.3-0.9-2.4-2.1-2.7c-2.3,1-5.4,1.6-8.9,1.6s-6.6-0.6-8.9-1.6c-1.2,0.3-2.1,1.4-2.1,2.7v3.1c0,1.4-0.9,2.6-2.2,2.9l-0.9,0.2c-1.1,0.3-2,1.2-2.1,2.3c-0.1,1.6,1.1,2.9,2.7,2.9c0.1,0,0.1,0,0.2,0c1,6.5,6.5,11.5,13.3,11.5s12.3-5,13.3-11.5c0.1,0,0.1,0,0.2,0C39,29.1,40.3,27.7,40.2,26.1z" fill="#E8C8A0" stroke="none"/>
+          <circle cx="17.1" cy="25.8" r="1.1" fill="#444444"/>
+          <circle cx="30.9" cy="25.8" r="1.1" fill="#444444"/>
+          <path d="M21.2,36.1c0,0,0.7,0.9,2.8,0.9c2.1,0,2.8-0.9,2.8-0.9" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M39.4,16.7c0-0.8,0-1.8,0-2.8c0-6.9-6.6-12.2-15.4-12.2S8.6,6.9,8.6,13.8C8.6,22.7,9.4,24,9.4,24s6.9-3.4,15-5.4c8.3,1.9,14.2,5.3,14.2,5.3S39.2,23,39.4,16.7z" fill="#777777"/>
+          <path d="M24,5.7c8.4,0,14.8,4.8,15.4,11.2c0-0.1,0-0.2,0-0.3c0-0.8,0-1.8,0-2.8c0-6.9-6.6-12.2-15.4-12.2S8.6,6.9,8.6,13.8c0,1.2,0,2.2,0,3.2C9.2,10.5,15.6,5.7,24,5.7z" fill="#FFFFFF"/>
+          <path d="M39.4,16.7c0-0.8,0-1.8,0-2.8c0-6.9-6.6-12.2-15.4-12.2S8.6,6.9,8.6,13.8C8.6,22.7,9.4,24,9.4,24s6.9-3.4,15-5.4c8.3,1.9,14.2,5.3,14.2,5.3S39.2,23,39.4,16.7z" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8.6,13.8c0,0,5.8-10.5,22.3-11" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M35.4,11.9c0,0-11.7-0.2-22.1,6.6" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24.4,18.6c10.5-2.5,15-2,15-2" fill="none" stroke="#444444" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <!-- Custom features: eyebrows, nose, moustache, beard -->
+        <path d="M 73 111 Q 80 108 87 111" stroke="#3a2418" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M 113 111 Q 120 108 127 111" stroke="#3a2418" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="100" cy="125" rx="3" ry="2" fill="#D4B08A"/>
+        <path d="M 84 138 Q 96 135 100 137 Q 104 135 116 138" stroke="#5a3a1a" stroke-width="2.2" fill="#5a3a1a" stroke-linecap="round"/>
+        <path d="M 70 146 Q 80 139 90 143 Q 100 146 110 143 Q 120 139 130 146 Q 128 160 120 166 Q 110 170 100 170 Q 90 170 80 166 Q 72 160 70 146 Z" fill="#5a3a1a"/>
+        <path d="M 78 155 Q 83 160 85 163" stroke="#3a2418" stroke-width="0.7" fill="none" stroke-linecap="round" opacity=".4"/>
+        <path d="M 122 155 Q 117 160 115 163" stroke="#3a2418" stroke-width="0.7" fill="none" stroke-linecap="round" opacity=".4"/>
+        <!-- Left arm static -->
+        <path d="M 54 168 Q 30 184 28 210" stroke="#E8C8A0" stroke-width="17" stroke-linecap="round" fill="none"/>
+        <!-- Right arm WAVING -->
+        <path class="wave-arm" d="M 146 165 Q 168 156 182 138" stroke="#E8C8A0" stroke-width="17" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+  </div>
+</div>
+</section>
+
+</div></div>
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugins/notes/notes.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script>
+Reveal.initialize({
+  hash:true, slideNumber:'c/t',
+  transition:'fade', transitionSpeed:'default', backgroundTransition:'fade',
+  center:false, width:1200, height:680, margin:.03, minScale:.2, maxScale:2.5,
+  controls:true, progress:true, keyboard:true,
+  autoAnimate:true, autoAnimateEasing:'cubic-bezier(0.25,0.1,0.25,1)',
+  autoAnimateDuration:.4, autoAnimateUnmatched:'fade',
+  plugins:[RevealNotes],
+});
+
+function animateCounter(el,target,dur){
+  const isFloat=String(target).includes('.');
+  const obj={val:0};
+  gsap.to(obj,{val:target,duration:dur||1.4,ease:'power3.out',
+    onUpdate:()=>{el.textContent=isFloat?obj.val.toFixed(1):Math.round(obj.val).toLocaleString();}});
+}
+
+function spawnConfetti(slide){
+  const cols=['#FFD60A','#FF3B30','#0A84FF','#32D74B','#9333ea','#FF375F','#FF6B2B'];
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    const s=Math.random()*10+5;
+    p.style.cssText=`width:${s}px;height:${s}px;background:${cols[i%cols.length]};`+
+      `left:${Math.random()*100}%;top:-20px;`+
+      `border-radius:${Math.random()>.5?'50%':'3px'};`+
+      `animation-duration:${Math.random()*2.5+1.8}s;animation-delay:${Math.random()*1.5}s;`;
+    slide.appendChild(p);
+  }
+}
+
+function runAnim(slide,idx){
+  // Slide content wipe-in
+  const sl=slide.querySelector('.sb');
+  if(sl) gsap.fromTo(sl,{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.5,ease:'power2.inOut',clearProps:'clipPath'});
+
+  // Generic entrances
+  const rights=slide.querySelectorAll('.gsap-right');
+  if(rights.length) gsap.fromTo(rights,{opacity:0,x:-26},{opacity:1,x:0,duration:.55,stagger:.09,ease:'power2.out'});
+  const ups=slide.querySelectorAll('.gsap-up');
+  if(ups.length) gsap.fromTo(ups,{opacity:0,y:20},{opacity:1,y:0,duration:.5,stagger:.09,delay:.28,ease:'power2.out'});
+  const scales=slide.querySelectorAll('.gsap-scale');
+  if(scales.length) gsap.fromTo(scales,{opacity:0,scale:.8},{opacity:1,scale:1,duration:.65,delay:.1,ease:'back.out(1.4)'});
+
+  // Counters
+  slide.querySelectorAll('[data-count]').forEach(el=>animateCounter(el,parseFloat(el.dataset.count)));
+
+  // Bento tiles
+  if(idx===3){
+    gsap.fromTo(slide.querySelectorAll('.tile'),{opacity:0,scale:.86,y:14},{opacity:1,scale:1,y:0,duration:.44,stagger:.055,ease:'back.out(1.3)'});
+    gsap.fromTo(slide.querySelector('.timeline-strip'),{opacity:0,y:18},{opacity:1,y:0,duration:.5,delay:.42,ease:'power2.out'});
+    gsap.fromTo(slide.querySelectorAll('.tl-mk'),{opacity:0,scale:.4},{opacity:1,scale:1,duration:.32,stagger:.06,delay:.55,ease:'back.out(1.6)'});
+    gsap.fromTo(slide.querySelectorAll('.tl-stat'),{opacity:0,x:-12},{opacity:1,x:0,duration:.4,stagger:.08,delay:.6,ease:'power2.out'});
+  }
+
+  // Project slides: arch nodes + feature rows stagger
+  if(idx>=4&&idx<=10){
+    gsap.fromTo(slide.querySelectorAll('.an'),{opacity:0,x:-12},{opacity:1,x:0,duration:.3,stagger:.04,delay:.18,ease:'power2.out'});
+    gsap.fromTo(slide.querySelectorAll('.fr'),{opacity:0,y:14},{opacity:1,y:0,duration:.38,stagger:.08,delay:.3,ease:'power2.out'});
+    const stats=slide.querySelectorAll('.stat');
+    gsap.fromTo(stats,{opacity:0,scale:.75},{opacity:1,scale:1,duration:.44,stagger:.1,delay:.32,ease:'back.out(1.7)'});
+  }
+
+  // Metrics: all stat cards pop
+  if(idx===12) gsap.fromTo(slide.querySelectorAll('.stat'),{opacity:0,y:26,scale:.88},{opacity:1,y:0,scale:1,duration:.44,stagger:.09,ease:'back.out(1.4)'});
+
+  // Brain rows slide in
+  if(idx===13) gsap.fromTo(slide.querySelectorAll('.br'),{opacity:0,x:-32},{opacity:1,x:0,duration:.52,stagger:.18,ease:'power2.out'});
+
+  // Drake panels
+  if(idx===14) gsap.fromTo(slide.querySelectorAll('.dp'),{opacity:0,x:-24},{opacity:1,x:0,duration:.5,stagger:.22,ease:'power2.out'});
+
+  // Terminal lines
+  if(idx===11) gsap.fromTo(slide.querySelectorAll('.term > div'),{opacity:0,x:-10},{opacity:1,x:0,duration:.26,stagger:.05,ease:'none'});
+
+  // Thank you: big text + confetti
+  if(idx===15){
+    gsap.fromTo(slide.querySelectorAll('.bb'),{opacity:0,y:34,skewX:-2},{opacity:1,y:0,skewX:0,duration:.65,stagger:.12,ease:'power3.out'});
+    setTimeout(()=>spawnConfetti(slide),500);
+  }
+
+  // Who am I: stat cards
+  if(idx===1) gsap.fromTo(slide.querySelectorAll('.stat'),{opacity:0,scale:.82},{opacity:1,scale:1,duration:.4,stagger:.09,delay:.3,ease:'back.out(1.4)'});
+}
+
+Reveal.on('ready',({currentSlide})=>runAnim(currentSlide,0));
+Reveal.on('slidechanged',({currentSlide,indexh})=>runAnim(currentSlide,indexh));
+</script>
+</body></html>
